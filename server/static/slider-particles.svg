@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="173" height="15" viewBox="0 0 173 15" preserveAspectRatio="none">
+  <g fill="#d5e4fd" fill-opacity=".36">
+    <circle cx="3.7" cy="2.5" r=".36"/>
+    <circle cx="9.1" cy="12.1" r=".46"/>
+    <circle cx="23.5" cy="9.8" r=".39"/>
+    <circle cx="34.2" cy="3.7" r=".31"/>
+    <circle cx="47.6" cy="10.3" r=".43"/>
+    <circle cx="51.9" cy="12.6" r=".32"/>
+    <circle cx="61.7" cy="2.6" r=".38"/>
+    <circle cx="68.2" cy="7.2" r=".31"/>
+    <circle cx="83.5" cy="11.8" r=".41"/>
+    <circle cx="96.3" cy="2.1" r=".38"/>
+    <circle cx="103.6" cy="5.4" r=".36"/>
+    <circle cx="115.4" cy="11.7" r=".43"/>
+    <circle cx="119.6" cy="7.5" r=".33"/>
+    <circle cx="129.8" cy="9.4" r=".39"/>
+    <circle cx="145.5" cy="4.1" r=".35"/>
+    <circle cx="153.3" cy="12.1" r=".44"/>
+    <circle cx="169.6" cy="8.8" r=".38"/>
+  </g>
+  <g fill="#f8efdd" fill-opacity=".52">
+    <circle cx="15.7" cy="6.4" r=".63"/>
+    <circle cx="28.2" cy="4.6" r=".5"/>
+    <circle cx="45.2" cy="5.7" r=".59"/>
+    <circle cx="73.3" cy="10.2" r=".54"/>
+    <circle cx="90.9" cy="6.7" r=".58"/>
+    <circle cx="107.1" cy="10.6" r=".47"/>
+    <circle cx="136.4" cy="2.8" r=".56"/>
+    <circle cx="158.1" cy="6.2" r=".62"/>
+  </g>
+  <g fill="#fff4df" fill-opacity=".62">
+    <circle cx="56.3" cy="6" r=".75"/>
+    <circle cx="122.1" cy="5" r=".73"/>
+    <circle cx="164.7" cy="3.1" r=".69"/>
+  </g>
+</svg>

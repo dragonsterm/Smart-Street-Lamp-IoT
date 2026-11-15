@@ -47,7 +47,9 @@ for (let i = 0; i < 3; i++) {
   <div id="manual${i}" class="manual-controls" hidden>
     <label for="pwm${i}" class="slider-label">Kecerahan <output id="draft${i}" for="pwm${i}" aria-hidden="true">0%</output></label>
     <div id="track${i}" class="slider">
-      <div class="slider-track" aria-hidden="true"><span class="slider-fill"></span></div>
+      <div class="slider-track" aria-hidden="true">
+        <span class="slider-fill"><span class="slider-particles"></span></span>
+      </div>
       <input id="pwm${i}" type="range" min="0" max="100" value="0" step="1" aria-label="Kecerahan lampu ${i + 1}">
     </div>
     <div class="channel-actions">

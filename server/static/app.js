@@ -215,6 +215,8 @@ function renderState(state){
   const t = state.telemetry;
   renderLampOverview(t?.pwm, state.online);
   const physicalDevice = t?.measurement_kind === "ina219_measured";
+  const digitalState = $("digital-state");
+  digitalState.hidden = !t || physicalDevice;
   const powerAvailable = t?.ina_valid === true;
   const distance = t?.distance_cm?.[0];
   const current = powerAvailable ? t.current_ma : null;
@@ -238,7 +240,7 @@ function renderState(state){
     const present=t.vehicle_present?.[0],hold=t.vehicle_hold_ms?.[0]||0;
     $("ldr-detail").textContent=`ADC ${t.ldr_raw} / 4095 · GPIO34`;
     $("light-condition").textContent=t.light_condition==="unknown"?"Menunggu sensor":`${dark?"Gelap":"Terang"}${band?" · tetap stabil":""}`;
-    $("digital-state").textContent=`DO ${t.ldr_digital_dark?"HIGH / gelap":"LOW / terang"}`;
+    if (!physicalDevice) digitalState.textContent=`DO ${t.ldr_digital_dark?"HIGH / gelap":"LOW / terang"}`;
     $("entry-presence").textContent=distance==null?"Sensor belum tersedia":present?"Ada kendaraan":hold>0?`Terang ${Math.ceil(hold/1000)} detik lagi`:"Jalan sepi";
     const mode=t.mode==="manual"?"Manual":t.auto_profile==="light_only"?"Otomatis · Ikuti cahaya":"Otomatis · Hemat";
     $("actual-mode").textContent=mode;$("control-state").textContent=t.mode==="manual"?"Manual":"Otomatis";

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="670" viewBox="0 0 1280 670" role="img" aria-labelledby="title desc">
+<title id="title">DFD konteks · layanan Smart Street Lamp</title><desc id="desc">Notasi Gane–Sarson. Batas sistem: dashboard, API dan penyimpanan. ESP32 mengambil keputusan otomatis lokal.</desc>
+<rect width="1280" height="670" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#14213d"/></marker></defs>
+<text x="48" y="53" font-family="Segoe UI,Arial,sans-serif" font-size="30" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="48" dy="0">DFD konteks · layanan Smart Street Lamp</tspan></text>
+<text x="48" y="86" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">Notasi Gane–Sarson. Batas sistem: dashboard, API dan penyimpanan. ESP32 mengambil keputusan otomatis lokal.</tspan></text>
+<polyline points="48,110 1232,110" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="45" y="250" width="225" height="145" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="157.5" y="286" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="157.5" dy="0">E1 · Pengguna</tspan></text>
+<text x="157.5" y="317" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="157.5" dy="0">Browser / dashboard</tspan></text>
+<rect x="470" y="240" width="340" height="165" rx="18" fill="#f4ede0" stroke="#14213d" stroke-width="1.6"/>
+<text x="640.0" y="276" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="640.0" dy="0">0 · Layanan Streetlamp</tspan></text>
+<text x="640.0" y="307" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="640.0" dy="0">Autentikasi dan validasi</tspan><tspan x="640.0" dy="21.0">Telemetri, perintah, konfirmasi</tspan></text>
+<rect x="1010" y="250" width="225" height="145" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="1122.5" y="286" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="1122.5" dy="0">E2 · ESP32</tspan></text>
+<text x="1122.5" y="317" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="1122.5" dy="0">Kendali lokal + sensor</tspan></text>
+<polyline points="270,280 470,280" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="370" y="220" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="370" dy="0">Login, mode, PWM, preset</tspan></text>
+<polyline points="470,365 270,365" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="370" y="425" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="370" dy="0">Status, riwayat, hasil ACK</tspan></text>
+<polyline points="810,280 1010,280" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="910" y="220" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="910" dy="0">ID boot / perintah + expiry</tspan></text>
+<polyline points="1010,365 810,365" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="910" y="425" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="910" dy="0">Telemetri + ACK penerapan</tspan></text>
+<rect x="48" y="485" width="1184" height="101" rx="8" fill="#f6f4ed" stroke="#d6dbe3"/>
+<text x="66" y="513" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="66" dy="0">Kotak = entitas eksternal. Persegi panjang bersudut bulat = proses. Panah berlabel = aliran data satu arah.</tspan><tspan x="66" dy="22.4">Perintah lingkungan mengubah model LDR virtual. Nilai cahaya pada dashboard tetap berasal dari ADC GPIO34.</tspan><tspan x="66" dy="22.4">MySQL menyimpan riwayat; kontrol lampu tidak menunggu dashboard. Tidak ada jalur kabel sensor pada DFD ini.</tspan></text>
+<text x="48" y="645" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">SMART STREET LAMP  /  ESP32 · FastAPI · MySQL (XAMPP/MariaDB)  /  05 NOV 2026</tspan></text>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1040" viewBox="0 0 1480 1040" role="img" aria-labelledby="title desc">
+<title id="title">DFD level 1 · proses dan penyimpanan</title><desc id="desc">Dekomposisi proses 0. Semua aliran bernama data; D0 adalah berkas konfigurasi, D1–D4 adalah tabel MySQL.</desc>
+<rect width="1480" height="1040" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#14213d"/></marker></defs>
+<text x="48" y="53" font-family="Segoe UI,Arial,sans-serif" font-size="30" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="48" dy="0">DFD level 1 · proses dan penyimpanan</tspan></text>
+<text x="48" y="86" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">Dekomposisi proses 0. Semua aliran bernama data; D0 adalah berkas konfigurasi, D1–D4 adalah tabel MySQL.</tspan></text>
+<polyline points="48,110 1432,110" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="45" y="420" width="210" height="150" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="150.0" y="456" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="150.0" dy="0">E1 · Pengguna</tspan></text>
+<text x="150.0" y="487" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="150.0" dy="0">Browser / dashboard</tspan></text>
+<rect x="380" y="160" width="280" height="110" rx="18" fill="#f4ede0" stroke="#14213d" stroke-width="1.6"/>
+<text x="520.0" y="196" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="520.0" dy="0">1.0 · Autentikasi</tspan></text>
+<text x="520.0" y="227" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="520.0" dy="0">Verifikasi akun, cookie sesi</tspan></text>
+<rect x="380" y="420" width="280" height="130" rx="18" fill="#f4ede0" stroke="#14213d" stroke-width="1.6"/>
+<text x="520.0" y="456" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="520.0" dy="0">2.0 · Kelola perintah</tspan></text>
+<text x="520.0" y="487" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="520.0" dy="0">Validasi mode / PWM / preset</tspan><tspan x="520.0" dy="21.0">UUID + expiration 30 detik</tspan></text>
+<rect x="880" y="420" width="280" height="130" rx="18" fill="#f4ede0" stroke="#14213d" stroke-width="1.6"/>
+<text x="1020.0" y="456" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="1020.0" dy="0">3.0 · Sinkronisasi</tspan></text>
+<text x="1020.0" y="487" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="1020.0" dy="0">Token, boot ID, sequence</tspan><tspan x="1020.0" dy="21.0">Simpan data, cocokkan ACK</tspan></text>
+<rect x="380" y="760" width="280" height="110" rx="18" fill="#f4ede0" stroke="#14213d" stroke-width="1.6"/>
+<text x="520.0" y="796" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="520.0" dy="0">4.0 · Pemantauan</tspan></text>
+<text x="520.0" y="827" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="520.0" dy="0">Status luring + riwayat</tspan></text>
+<rect x="1225" y="420" width="210" height="130" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="1330.0" y="456" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="1330.0" dy="0">E2 · ESP32</tspan></text>
+<text x="1330.0" y="487" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="middle"><tspan x="1330.0" dy="0">HTTP sync ±2 detik</tspan></text>
+<polyline points="1170,155 850,155 850,245 1170,245" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="895,155 895,245" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="872" y="186" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="872" dy="0">D0</tspan></text>
+<text x="912" y="186" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="912" dy="0">Konfigurasi akun</tspan></text>
+<text x="912" y="215" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="start"><tspan x="912" dy="0">.env (bukan tabel)</tspan></text>
+<polyline points="1230,310 880,310 880,385 1230,385" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="925,310 925,385" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="902" y="341" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="902" dy="0">D1</tspan></text>
+<text x="942" y="341" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="942" dy="0">devices</tspan></text>
+<text x="942" y="370" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="start"><tspan x="942" dy="0">active_boot, last_seen</tspan></text>
+<polyline points="1230,635 880,635 880,710 1230,710" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="925,635 925,710" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="902" y="666" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="902" dy="0">D2</tspan></text>
+<text x="942" y="666" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="942" dy="0">boots</tspan></text>
+<text x="942" y="695" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="start"><tspan x="942" dy="0">boot_id, last_seq</tspan></text>
+<polyline points="1230,760 880,760 880,835 1230,835" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="925,760 925,835" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="902" y="791" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="902" dy="0">D3</tspan></text>
+<text x="942" y="791" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="942" dy="0">commands</tspan></text>
+<text x="942" y="820" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="start"><tspan x="942" dy="0">antre / terkirim / ACK / expiry</tspan></text>
+<polyline points="1230,895 880,895 880,970 1230,970" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="925,895 925,970" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="902" y="926" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="902" dy="0">D4</tspan></text>
+<text x="942" y="926" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="942" dy="0">telemetry</tspan></text>
+<text x="942" y="955" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#617086" text-anchor="start"><tspan x="942" dy="0">timestamp + payload JSON</tspan></text>
+<polyline points="255,445 300,445 300,215 380,215" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="300" y="180" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="300" dy="0">Kredensial</tspan></text>
+<polyline points="850,205 660,205" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="755" y="185" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="755" dy="0">Akun + rahasia sesi</tspan></text>
+<polyline points="520,270 520,420" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="605" y="345" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="605" dy="0">Sesi terverifikasi</tspan></text>
+<polyline points="255,505 380,505" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="315" y="485" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="315" dy="0">Pengaturan</tspan></text>
+<polyline points="660,465 730,465 730,790 880,790" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="765" y="690" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="765" dy="0">Perintah</tspan><tspan x="765" dy="21.0">valid</tspan></text>
+<polyline points="880,780 800,780 800,500 880,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="845" y="565" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="845" dy="0">Perintah</tspan><tspan x="845" dy="21.0">masih berlaku</tspan></text>
+<polyline points="1160,455 1225,455" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1298" y="395" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1298" dy="0">Perintah / ID boot</tspan></text>
+<polyline points="1225,515 1160,515" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1295" y="585" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1295" dy="0">Data + ACK</tspan></text>
+<polyline points="1020,420 1020,385" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1140" y="295" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1140" dy="0">Last seen / boot aktif</tspan></text>
+<polyline points="965,550 965,635" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="875" y="615" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="875" dy="0">Boot + urutan</tspan></text>
+<polyline points="1080,550 1080,720 1245,720 1245,800 1230,800" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1320" y="695" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1320" dy="0">Status ACK</tspan></text>
+<polyline points="1160,535 1200,535 1200,865 1010,865 1010,895" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1300" y="855" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1300" dy="0">Telemetri diterima</tspan></text>
+<polyline points="880,930 770,930 770,860 660,860" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="760" y="970" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="760" dy="0">Riwayat sensor</tspan></text>
+<polyline points="880,805 660,805" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="770" y="835" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="770" dy="0">Riwayat perintah</tspan></text>
+<polyline points="255,550 300,550 300,815 380,815" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="295" y="730" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="295" dy="0">Permintaan status</tspan></text>
+<polyline points="380,845 275,845 275,585 150,585 150,570" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="160" y="930" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="160" dy="0">Status + riwayat</tspan></text>
+<polyline points="1060,635 1060,550" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1140" y="625" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1140" dy="0">Urutan terakhir</tspan></text>
+<path d="M880 350 H695 V455 Q680 465 695 475 V780 H660" fill="none" stroke="#fff" stroke-width="6"/>
+<path d="M880 350 H695 V455 Q680 465 695 475 V780 H660" fill="none" stroke="#14213d" stroke-width="1.8" marker-end="url(#arrow)"/>
+<text x="640" y="675" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="end"><tspan x="640" dy="0">Last seen</tspan></text>
+<text x="48" y="1015" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">SMART STREET LAMP  /  ESP32 · FastAPI · MySQL (XAMPP/MariaDB)  /  05 NOV 2026</tspan></text>
+</svg>

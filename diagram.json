@@ -1,0 +1,656 @@
+{
+  "version": 1,
+  "author": "Smart Street Lamp",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 290,
+      "left": -150,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-breadboard",
+      "id": "bb",
+      "top": 200,
+      "left": 100,
+      "attrs": {}
+    },
+    {
+      "type": "chip-ldr-lm393",
+      "id": "ldr",
+      "top": -80,
+      "left": 135,
+      "attrs": {
+        "environment": "1",
+        "dark": "0"
+      }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "us1",
+      "top": -80,
+      "left": 660,
+      "attrs": {
+        "distance": "300"
+      }
+    },
+    {
+      "type": "chip-ina219",
+      "id": "ina",
+      "top": 200,
+      "left": 1100,
+      "attrs": {
+        "busVoltage": "5"
+      }
+    },
+    {
+      "type": "chip-mosfet-driver",
+      "id": "m1",
+      "top": 570,
+      "left": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 570,
+      "left": 330,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 595,
+      "left": 440,
+      "attrs": {
+        "color": "white",
+        "label": "Lampu 1"
+      }
+    },
+    {
+      "type": "chip-mosfet-driver",
+      "id": "m2",
+      "top": 570,
+      "left": 570,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 570,
+      "left": 720,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": 595,
+      "left": 830,
+      "attrs": {
+        "color": "white",
+        "label": "Lampu 2"
+      }
+    },
+    {
+      "type": "chip-mosfet-driver",
+      "id": "m3",
+      "top": 570,
+      "left": 960,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 570,
+      "left": 1110,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": 595,
+      "left": 1220,
+      "attrs": {
+        "color": "white",
+        "label": "Lampu 3"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX0",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX0",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:3V3",
+      "bb:tp.1",
+      "red",
+      [
+        "h-35",
+        "v-180"
+      ]
+    ],
+    [
+      "esp:GND.1",
+      "bb:bn.1",
+      "black",
+      [
+        "h-55",
+        "v140"
+      ]
+    ],
+    [
+      "bb:bn.2",
+      "bb:tn.2",
+      "black",
+      [
+        "h-30"
+      ]
+    ],
+    [
+      "bb:tp.25",
+      "bb:tp.26",
+      "red",
+      [
+        "v-15"
+      ]
+    ],
+    [
+      "bb:tn.25",
+      "bb:tn.26",
+      "black",
+      [
+        "v-15"
+      ]
+    ],
+    [
+      "bb:bn.25",
+      "bb:bn.26",
+      "black",
+      [
+        "v15"
+      ]
+    ],
+    [
+      "bb:bp.25",
+      "bb:bp.26",
+      "red",
+      [
+        "v15"
+      ]
+    ],
+    [
+      "esp:VIN",
+      "bb:61b.f",
+      "red",
+      [
+        "v265",
+        "h1300"
+      ]
+    ],
+    [
+      "bb:61b.g",
+      "ina:VIN+",
+      "red",
+      [
+        "v45",
+        "h180"
+      ]
+    ],
+    [
+      "ina:VIN-",
+      "bb:bp.48",
+      "red",
+      [
+        "h75",
+        "v195"
+      ]
+    ],
+    [
+      "bb:tp.5",
+      "ldr:VCC",
+      "red",
+      [
+        "v-150",
+        "h-10"
+      ]
+    ],
+    [
+      "bb:tn.6",
+      "ldr:GND",
+      "black",
+      [
+        "v-130",
+        "h-20"
+      ]
+    ],
+    [
+      "bb:tp.48",
+      "ina:VCC",
+      "red",
+      [
+        "v-70",
+        "h150"
+      ]
+    ],
+    [
+      "bb:bn.48",
+      "ina:GND",
+      "black",
+      [
+        "v55",
+        "h150"
+      ]
+    ],
+    [
+      "bb:61b.h",
+      "us1:VCC",
+      "red",
+      [
+        "v-220",
+        "h-180"
+      ]
+    ],
+    [
+      "bb:tn.35",
+      "us1:GND",
+      "black",
+      [
+        "v-115",
+        "h120"
+      ]
+    ],
+    [
+      "esp:D34",
+      "bb:5t.a",
+      "green",
+      [
+        "h-40",
+        "v-190",
+        "*",
+        "v-55"
+      ]
+    ],
+    [
+      "bb:5t.e",
+      "ldr:AO",
+      "green",
+      [
+        "v-55"
+      ]
+    ],
+    [
+      "esp:D35",
+      "bb:8t.a",
+      "yellow",
+      [
+        "h-52",
+        "v-208",
+        "*",
+        "v-73"
+      ]
+    ],
+    [
+      "bb:8t.e",
+      "ldr:DO",
+      "yellow",
+      [
+        "v-74"
+      ]
+    ],
+    [
+      "esp:D21",
+      "bb:15t.a",
+      "green",
+      [
+        "h-64",
+        "v-226",
+        "*",
+        "v-91"
+      ]
+    ],
+    [
+      "bb:15t.e",
+      "ina:SDA",
+      "green",
+      [
+        "v-93"
+      ]
+    ],
+    [
+      "esp:D22",
+      "bb:18t.a",
+      "blue",
+      [
+        "h-76",
+        "v-244",
+        "*",
+        "v-109"
+      ]
+    ],
+    [
+      "bb:18t.e",
+      "ina:SCL",
+      "blue",
+      [
+        "v-112"
+      ]
+    ],
+    [
+      "esp:D18",
+      "bb:44t.a",
+      "cyan",
+      [
+        "h-88",
+        "v-262",
+        "*",
+        "v-127"
+      ]
+    ],
+    [
+      "bb:44t.e",
+      "us1:TRIG",
+      "cyan",
+      [
+        "v-131"
+      ]
+    ],
+    [
+      "esp:D19",
+      "bb:48t.a",
+      "blue",
+      [
+        "h-100",
+        "v-280",
+        "*",
+        "v-145"
+      ]
+    ],
+    [
+      "bb:48t.e",
+      "us1:ECHO",
+      "blue",
+      [
+        "v-150"
+      ]
+    ],
+    [
+      "bb:15t.d",
+      "ldr:SIM_SDA",
+      "purple",
+      [
+        "v-230",
+        "h-95"
+      ]
+    ],
+    [
+      "bb:18t.d",
+      "ldr:SIM_SCL",
+      "purple",
+      [
+        "v-250",
+        "h-115"
+      ]
+    ],
+    [
+      "esp:D25",
+      "bb:15b.f",
+      "orange",
+      [
+        "h-55",
+        "v185",
+        "*",
+        "v100"
+      ]
+    ],
+    [
+      "bb:15b.j",
+      "m1:PWM",
+      "orange",
+      [
+        "v100",
+        "*",
+        "h30"
+      ]
+    ],
+    [
+      "bb:15b.i",
+      "ina:PWM1",
+      "purple",
+      [
+        "v56",
+        "h660"
+      ]
+    ],
+    [
+      "bb:bp.10",
+      "m1:VIN+",
+      "red",
+      [
+        "v138",
+        "h-45"
+      ]
+    ],
+    [
+      "bb:bn.10",
+      "m1:VIN-",
+      "black",
+      [
+        "v163",
+        "h-60"
+      ]
+    ],
+    [
+      "m1:VIN-",
+      "m1:GND",
+      "black",
+      [
+        "h-15"
+      ]
+    ],
+    [
+      "m1:VOUT+",
+      "r1:1",
+      "red",
+      [
+        "h25"
+      ]
+    ],
+    [
+      "r1:2",
+      "led1:A",
+      "red",
+      [
+        "h35"
+      ]
+    ],
+    [
+      "led1:C",
+      "m1:VOUT-",
+      "black",
+      [
+        "v55",
+        "h-155"
+      ]
+    ],
+    [
+      "esp:D26",
+      "bb:35b.f",
+      "magenta",
+      [
+        "h-70",
+        "v200",
+        "*",
+        "v120"
+      ]
+    ],
+    [
+      "bb:35b.j",
+      "m2:PWM",
+      "magenta",
+      [
+        "v115",
+        "*",
+        "h30"
+      ]
+    ],
+    [
+      "bb:35b.i",
+      "ina:PWM2",
+      "purple",
+      [
+        "v72",
+        "h420"
+      ]
+    ],
+    [
+      "bb:bp.28",
+      "m2:VIN+",
+      "red",
+      [
+        "v156",
+        "h-55"
+      ]
+    ],
+    [
+      "bb:bn.28",
+      "m2:VIN-",
+      "black",
+      [
+        "v181",
+        "h-70"
+      ]
+    ],
+    [
+      "m2:VIN-",
+      "m2:GND",
+      "black",
+      [
+        "h-15"
+      ]
+    ],
+    [
+      "m2:VOUT+",
+      "r2:1",
+      "red",
+      [
+        "h25"
+      ]
+    ],
+    [
+      "r2:2",
+      "led2:A",
+      "red",
+      [
+        "h35"
+      ]
+    ],
+    [
+      "led2:C",
+      "m2:VOUT-",
+      "black",
+      [
+        "v55",
+        "h-155"
+      ]
+    ],
+    [
+      "esp:D27",
+      "bb:55b.f",
+      "gold",
+      [
+        "h-85",
+        "v215",
+        "*",
+        "v140"
+      ]
+    ],
+    [
+      "bb:55b.j",
+      "m3:PWM",
+      "gold",
+      [
+        "v130",
+        "*",
+        "h30"
+      ]
+    ],
+    [
+      "bb:55b.i",
+      "ina:PWM3",
+      "purple",
+      [
+        "v88",
+        "h180"
+      ]
+    ],
+    [
+      "bb:bp.45",
+      "m3:VIN+",
+      "red",
+      [
+        "v174",
+        "h-65"
+      ]
+    ],
+    [
+      "bb:bn.45",
+      "m3:VIN-",
+      "black",
+      [
+        "v199",
+        "h-80"
+      ]
+    ],
+    [
+      "m3:VIN-",
+      "m3:GND",
+      "black",
+      [
+        "h-15"
+      ]
+    ],
+    [
+      "m3:VOUT+",
+      "r3:1",
+      "red",
+      [
+        "h25"
+      ]
+    ],
+    [
+      "r3:2",
+      "led3:A",
+      "red",
+      [
+        "h35"
+      ]
+    ],
+    [
+      "led3:C",
+      "m3:VOUT-",
+      "black",
+      [
+        "v55",
+        "h-155"
+      ]
+    ]
+  ],
+  "dependencies": {}
+}

@@ -1,0 +1,2 @@
+# Keep source files consistent across Windows and other clone locations.
+* text=auto eol=lf

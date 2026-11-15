@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1120" viewBox="0 0 1280 1120" role="img" aria-labelledby="title desc">
+<title id="title">Struktur database · MySQL / MariaDB</title><desc id="desc">ERD logis dengan kardinalitas crow’s foot. Struktur field dan indeks mengikuti server/schema.sql; relasi dijaga aplikasi (tanpa SQL FOREIGN KEY).</desc>
+<rect width="1280" height="1120" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#14213d"/></marker></defs>
+<text x="48" y="53" font-family="Segoe UI,Arial,sans-serif" font-size="30" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="48" dy="0">Struktur database · MySQL / MariaDB</tspan></text>
+<text x="48" y="86" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">ERD logis dengan kardinalitas crow’s foot. Struktur field dan indeks mengikuti server/schema.sql; relasi dijaga aplikasi (tanpa SQL FOREIGN KEY).</tspan></text>
+<polyline points="48,110 1232,110" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="65" y="170" width="475" height="157" rx="8" fill="#fff" stroke="#14213d" stroke-width="1.8"/>
+<path d="M65 222 H540" fill="none" stroke="#14213d" stroke-width="1.5"/>
+<text x="85" y="203" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">devices</tspan></text>
+<text x="85" y="247" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">PK  id : VARCHAR(64)</tspan></text>
+<text x="85" y="276" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">last_seen_ms : BIGINT NULL</tspan></text>
+<text x="85" y="305" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">active_boot : VARCHAR(64) NULL</tspan></text>
+<rect x="735" y="170" width="475" height="157" rx="8" fill="#fff" stroke="#14213d" stroke-width="1.8"/>
+<path d="M735 222 H1210" fill="none" stroke="#14213d" stroke-width="1.5"/>
+<text x="755" y="203" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">boots</tspan></text>
+<text x="755" y="247" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">PK / logical ref  device_id : VARCHAR(64)</tspan></text>
+<text x="755" y="276" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">PK  boot_id : VARCHAR(64)</tspan></text>
+<text x="755" y="305" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">last_seq : BIGINT UNSIGNED</tspan></text>
+<rect x="65" y="500" width="475" height="360" rx="8" fill="#fff" stroke="#14213d" stroke-width="1.8"/>
+<path d="M65 552 H540" fill="none" stroke="#14213d" stroke-width="1.5"/>
+<text x="85" y="533" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">commands</tspan></text>
+<text x="85" y="577" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">PK  id : CHAR(36) · UUID</tspan></text>
+<text x="85" y="606" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">logical ref  device_id : VARCHAR(64)</tspan></text>
+<text x="85" y="635" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">issued_at_ms, expires_at_ms : BIGINT</tspan></text>
+<text x="85" y="664" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">mode : VARCHAR(8)</tspan></text>
+<text x="85" y="693" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">pwm : VARCHAR(64) · JSON array[3]</tspan></text>
+<text x="85" y="722" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">auto_profile : VARCHAR(16)</tspan></text>
+<text x="85" y="751" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">environment : VARCHAR(12) NULL</tspan></text>
+<text x="85" y="780" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">status : VARCHAR(16)</tspan></text>
+<text x="85" y="809" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">delivered_at_ms, applied_at_ms : BIGINT NULL</tspan></text>
+<text x="85" y="838" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="85" dy="0">detail : VARCHAR(255) NULL</tspan></text>
+<rect x="735" y="500" width="475" height="273" rx="8" fill="#fff" stroke="#14213d" stroke-width="1.8"/>
+<path d="M735 552 H1210" fill="none" stroke="#14213d" stroke-width="1.5"/>
+<text x="755" y="533" font-family="Segoe UI,Arial,sans-serif" font-size="21" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">telemetry</tspan></text>
+<text x="755" y="577" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">PK  id : BIGINT UNSIGNED AUTO_INCREMENT</tspan></text>
+<text x="755" y="606" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">logical ref  device_id, boot_id : VARCHAR(64)</tspan></text>
+<text x="755" y="635" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">seq : BIGINT UNSIGNED</tspan></text>
+<text x="755" y="664" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">received_at_ms : BIGINT</tspan></text>
+<text x="755" y="693" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">payload : LONGTEXT · validated JSON</tspan></text>
+<text x="755" y="722" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">UNIQUE(device_id, boot_id, seq)</tspan></text>
+<text x="755" y="751" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="755" dy="0">INDEX(device_id, received_at_ms)</tspan></text>
+<polyline points="540,230 735,230" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<polyline points="548,220 548,240" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="715,230 735,218" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="715,230 735,242" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="711,220 711,240" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="638" y="205" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="638" dy="0">1 : banyak</tspan></text>
+<polyline points="300,327 300,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<polyline points="290,335 310,335" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="300,480 288,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="300,480 312,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="290,476 310,476" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="410" y="405" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="410" dy="0">1 : banyak perintah</tspan></text>
+<polyline points="970,327 970,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<polyline points="960,335 980,335" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="970,480 958,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="970,480 982,500" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="960,476 980,476" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="1110" y="405" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="1110" dy="0">1 : banyak sampel / boot</tspan></text>
+<rect x="65" y="910" width="1145" height="124" rx="8" fill="#f6f4ed" stroke="#d6dbe3"/>
+<text x="83" y="938" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="83" dy="0">Nilai waktu memakai Unix epoch milidetik. boots.last_seq menolak data lama; sequence per boot mencegah duplikasi.</tspan><tspan x="83" dy="22.4">commands: queued → delivered → applied / failed; atau expired / superseded. INDEX(device_id, issued_at_ms).</tspan><tspan x="83" dy="22.4">telemetry.payload: ldr_raw, light_percent, light_condition, distance_cm[1], pwm[3], INA virtual, environment, ack_id.</tspan><tspan x="83" dy="22.4">Akun admin berada di konfigurasi lokal; sesi browser adalah cookie bertanda tangan. Tidak ada tabel users yang tidak dipakai.</tspan></text>
+<text x="48" y="1095" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">SMART STREET LAMP  /  ESP32 · FastAPI · MySQL (XAMPP/MariaDB)  /  05 NOV 2026</tspan></text>
+</svg>

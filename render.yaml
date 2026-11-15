@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: smart-street-lamp
+    runtime: python
+    region: singapore
+    plan: free
+    autoDeployTrigger: commit
+    buildCommand: python -m pip install -r requirements.txt
+    startCommand: python -m uvicorn server.app:create_app --factory --host 0.0.0.0 --port $PORT --workers 1 --forwarded-allow-ips "*"
+    healthCheckPath: /health
+    envVars:
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DEVICE_TOKEN
+        sync: false
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: MYSQL_HOST
+        sync: false
+      - key: MYSQL_USER
+        sync: false
+      - key: MYSQL_PASSWORD
+        sync: false
+      - key: MYSQL_DATABASE
+        sync: false

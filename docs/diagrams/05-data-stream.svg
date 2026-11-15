@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1530" viewBox="0 0 1400 1530" role="img" aria-labelledby="title desc">
+<title id="title">Data stream · perintah, telemetri dan ACK</title><desc id="desc">Diagram urutan (sequence). Empat jalur aplikasi; garis putus-putus = respons. Contoh payload menyamarkan identitas dan token.</desc>
+<rect width="1400" height="1530" fill="#ffffff"/>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" viewBox="0 0 10 10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L10 5 L0 10Z" fill="#14213d"/></marker></defs>
+<text x="48" y="53" font-family="Segoe UI,Arial,sans-serif" font-size="30" font-weight="600" fill="#14213d" text-anchor="start"><tspan x="48" dy="0">Data stream · perintah, telemetri dan ACK</tspan></text>
+<text x="48" y="86" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">Diagram urutan (sequence). Empat jalur aplikasi; garis putus-putus = respons. Contoh payload menyamarkan identitas dan token.</tspan></text>
+<polyline points="48,110 1352,110" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="35" y="140" width="220" height="65" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="145.0" y="176" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="145.0" dy="0">Browser</tspan></text>
+<polyline points="145,205 145,1435" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<rect x="390" y="140" width="220" height="65" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="500.0" y="176" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="500.0" dy="0">FastAPI</tspan></text>
+<polyline points="500,205 500,1435" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<rect x="745" y="140" width="220" height="65" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="855.0" y="176" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="855.0" dy="0">MySQL</tspan></text>
+<polyline points="855,205 855,1435" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<rect x="1115" y="140" width="220" height="65" rx="0" fill="#f2f5f8" stroke="#14213d" stroke-width="1.6"/>
+<text x="1225.0" y="176" font-family="Segoe UI,Arial,sans-serif" font-size="18" font-weight="600" fill="#14213d" text-anchor="middle"><tspan x="1225.0" dy="0">ESP32 / Wokwi</tspan></text>
+<polyline points="1225,205 1225,1435" fill="none" stroke="#d6dbe3" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7 6"/>
+<polyline points="1225,245 500,245" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="862.5" y="228" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="862.5" dy="0">POST /api/devices/{id}/boot · Bearer token</tspan></text>
+<polyline points="500,300 1225,300" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="862.5" y="283" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="862.5" dy="0">200 { boot_id: "nonce-baru-32-hex", server_time_ms: … }</tspan></text>
+<polyline points="145,365 500,365" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="322.5" y="348" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">POST /api/login { username, password }</tspan></text>
+<polyline points="500,415 145,415" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="322.5" y="398" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">200 + cookie HttpOnly / SameSite=Strict</tspan></text>
+<polyline points="145,485 500,485" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="322.5" y="468" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">POST /api/commands</tspan></text>
+<text x="170" y="517" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#14213d" text-anchor="start"><tspan x="170" dy="0">{ mode: "auto", pwm: [0,0,0],</tspan><tspan x="170" dy="18.2">  auto_profile: "adaptive", environment: "night" }</tspan></text>
+<polyline points="500,560 855,560" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="677.5" y="543" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="677.5" dy="0">INSERT commands · UUID / expiry=now+30s</tspan></text>
+<polyline points="500,610 145,610" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="322.5" y="593" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">201 { id: "uuid", status: "queued", … }</tspan></text>
+<polyline points="1225,690 500,690" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="862.5" y="673" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="862.5" dy="0">POST /api/devices/{id}/sync · tiap ±2 s</tspan></text>
+<text x="930" y="722" font-family="Segoe UI,Arial,sans-serif" font-size="13" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="930" dy="0">{ boot_id, seq, uptime_ms, ldr_raw, light_percent,</tspan><tspan x="930" dy="18.2">  distance_cm: [300], pwm: [0,0,0], ack_id: null, … }</tspan></text>
+<polyline points="500,775 855,775" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="677.5" y="758" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="677.5" dy="0">INSERT telemetry / UPDATE boots, devices</tspan></text>
+<polyline points="855,825 500,825" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="677.5" y="808" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="677.5" dy="0">Perintah masih berlaku; tandai delivered</tspan></text>
+<polyline points="500,885 1225,885" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="862.5" y="868" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="862.5" dy="0">200 { server_time_ms, command: { id, expires_at_ms, mode, pwm, environment, … } }</tspan></text>
+<rect x="980" y="930" width="360" height="101" rx="8" fill="#f6f4ed" stroke="#d6dbe3"/>
+<text x="998" y="958" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="998" dy="0">ESP32 validasi ID + expiry.</tspan><tspan x="998" dy="22.4">Preset → chip virtual → ADC.</tspan><tspan x="998" dy="22.4">Kendali tetap lokal ±100 ms.</tspan></text>
+<polyline points="1225,1085 500,1085" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="862.5" y="1068" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="862.5" dy="0">Sync berikutnya: { ack_id: "uuid", environment: "night", pwm: [20,20,20], … }</tspan></text>
+<polyline points="500,1140 855,1140" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="677.5" y="1123" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="677.5" dy="0">Cocokkan ACK + keadaan → applied / failed</tspan></text>
+<polyline points="145,1225 500,1225" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="322.5" y="1208" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">GET /api/state + /api/history · tiap ±2 s</tspan></text>
+<polyline points="500,1275 855,1275" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="677.5" y="1258" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="677.5" dy="0">SELECT status, telemetry, commands</tspan></text>
+<polyline points="500,1335 145,1335" fill="none" stroke="#14213d" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="7 6"/>
+<text x="322.5" y="1318" font-family="Segoe UI,Arial,sans-serif" font-size="15" font-weight="400" fill="#14213d" text-anchor="middle"><tspan x="322.5" dy="0">200 telemetri aktual + status konfirmasi</tspan></text>
+<rect x="48" y="1395" width="1304" height="78" rx="8" fill="#f6f4ed" stroke="#d6dbe3"/>
+<text x="66" y="1423" font-family="Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#617086" text-anchor="start"><tspan x="66" dy="0">Dashboard tidak menulis nilai sensor langsung ke database. Angka yang tampil datang dari laporan ESP32.</tspan><tspan x="66" dy="22.4">Luring setelah 15 s tanpa telemetri baru; ESP32 kembali otomatis adaptif setelah 30 s tanpa server. HTTP hanya untuk lab lokal; HTTPS memakai CA.</tspan></text>
+<text x="48" y="1505" font-family="Segoe UI,Arial,sans-serif" font-size="11" font-weight="400" fill="#617086" text-anchor="start"><tspan x="48" dy="0">SMART STREET LAMP  /  ESP32 · FastAPI · MySQL (XAMPP/MariaDB)  /  05 NOV 2026</tspan></text>
+</svg>

@@ -1,0 +1,7 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {"label":"Start dashboard", "type":"process", "command":"${workspaceFolder}/.venv/bin/python", "windows":{"command":"${workspaceFolder}/.venv/Scripts/python.exe"}, "args":["-m","uvicorn","server.app:create_app","--factory","--host","127.0.0.1","--port","8000"], "problemMatcher":[]},
+    {"label":"Test API", "type":"process", "command":"${workspaceFolder}/.venv/bin/python", "windows":{"command":"${workspaceFolder}/.venv/Scripts/python.exe"}, "args":["-m","unittest","discover","-s","tests","-v"], "problemMatcher":[]}
+  ]
+}

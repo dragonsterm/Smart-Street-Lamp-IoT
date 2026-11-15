@@ -1,86 +1,279 @@
 <!doctype html>
 <html lang="id">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#14213d"><title>Streetlamp · Ruang kendali</title><link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14213d">
+  <title>Smart Street Lamp · Ruang kendali</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%2314213d%22%2F%3E%3Cpath%20d%3D%22M5%2020h6m-3%200V8a4%204%200%200%201%204-4h5m-2%200v3h4V5a1%201%200%200%200-1-1zM14%2011l-1%202m4-2v3m3-3%201%202%22%20stroke%3D%22%23f4ede0%22%20stroke-width%3D%221.45%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
 <body class="signed-out">
-<a class="skip-link" href="#main">Langsung ke konten</a>
-<header class="site-header"><a class="brand" href="#main"><span aria-hidden="true">✦</span> streetlamp <small>RUANG<br>KENDALI</small></a><nav id="navigation" aria-label="Navigasi" hidden><a href="#overview">Ringkasan</a><a href="#sensor-section">Sensor</a><a href="#controls">Kontrol</a><a href="#history-section">Riwayat</a></nav><div class="header-actions"><span id="connection" class="badge">Belum masuk</span><button id="logout" class="quiet" type="button" hidden>Keluar ↗</button></div></header>
-<main id="main">
-<form id="login" class="login-card"><span class="eyebrow">SMART STREET LAMP</span><h1>Selamat datang<br>di ruang kendali.</h1><p>Masuk untuk memantau cahaya dan mengatur tiga lampu jalan.</p><label for="username">Nama pengguna</label><input id="username" name="username" autocomplete="username" value="admin" required><label for="password">Kata sandi</label><input id="password" name="password" type="password" autocomplete="current-password" required><button class="primary" type="submit">Masuk ke dashboard ↗</button><p id="login-error" class="error" role="alert"></p></form>
-<div id="dashboard" hidden>
-<section id="overview" class="hero" aria-labelledby="hero-title">
-  <div class="hero-atmosphere" aria-hidden="true"></div>
-  <div class="hero-copy">
-    <div class="hero-kicker"><span class="spark" aria-hidden="true">✦</span> SMART STREET LAMP <span id="device">streetlamp-01</span></div>
-    <h1 id="hero-title">Jalan terang.<br><span>Energi terjaga.</span></h1>
-    <p id="hero-description">Cahaya yang menyesuaikan perjalanan.<br>Lampu lebih pintar, kendali tetap di tangan Anda.</p>
-    <div class="hero-tags"><span id="actual-mode">Menunggu lampu</span><span>Sensor LDR</span></div>
-    <div class="hero-actions"><a class="cream-button" href="#controls">Atur lampu <span aria-hidden="true">↗</span></a><a class="hero-link" href="#sensor-section">Lihat sensor <span aria-hidden="true">↗</span></a></div>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-logo" viewBox="0 0 24 24"><path d="M5 20h6m-3 0V8a4 4 0 0 1 4-4h5m-2 0v3h4V5a1 1 0 0 0-1-1zM14 11l-1 2m4-2v3m3-3 1 2"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.3"/><rect x="14" y="4" width="6" height="6" rx="1.3"/><rect x="4" y="14" width="6" height="6" rx="1.3"/><rect x="14" y="14" width="6" height="6" rx="1.3"/></symbol>
+    <symbol id="icon-sensor" viewBox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0M7.5 16a4.5 4.5 0 0 1 9 0"/><circle cx="12" cy="16" r="1.4"/><path d="M12 3v2m8 2-1.4 1.4M4 7l1.4 1.4"/></symbol>
+    <symbol id="icon-controls" viewBox="0 0 24 24"><path d="M6 4v4m0 4v8m6-16v9m0 4v3m6-16v3m0 4v9"/><circle cx="6" cy="10" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="18" cy="9" r="2"/></symbol>
+    <symbol id="icon-history" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 1.7 5M4 6v5h5m3-3v4l2.5 1.5"/></symbol>
+    <symbol id="icon-exit" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5m-1-7h10m-4-4 4 4-4 4"/></symbol>
+    <symbol id="icon-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4" rx=".5"/><path d="M10 3v3m4-3v3m-4 12v3m4-3v3M3 10h3m-3 4h3m12-4h3m-3 4h3"/></symbol>
+    <symbol id="icon-down-right" viewBox="0 0 24 24"><path d="M6 6l12 12m0-8v8h-8"/></symbol>
+    <symbol id="icon-right" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></symbol>
+    <symbol id="icon-distance" viewBox="0 0 24 24"><path d="M5 8h14M5 16h14M8 5 5 8l3 3m8 2 3 3-3 3"/></symbol>
+    <symbol id="icon-current" viewBox="0 0 24 24"><path d="M3 12h3l3-6 4 12 3-6h5"/></symbol>
+    <symbol id="icon-power" viewBox="0 0 24 24"><path d="m13 3-8 11h6l-1 7 9-11h-7z"/></symbol>
+    <defs>
+      <linearGradient id="lamp-metal">
+        <stop stop-color="#536b8d"/><stop offset=".42" stop-color="#d8e4f2"/><stop offset=".67" stop-color="#9bb0ce"/><stop offset="1" stop-color="#3e567b"/>
+      </linearGradient>
+      <linearGradient id="lamp-shade">
+        <stop stop-color="#829cbc"/><stop offset=".58" stop-color="#d1def0"/><stop offset="1" stop-color="#567194"/>
+      </linearGradient>
+      <linearGradient id="lamp-beam" x1="0" y1="0" x2="0" y2="1">
+        <stop stop-color="#fff0c9" stop-opacity=".7"/><stop offset=".62" stop-color="#e6c991" stop-opacity=".16"/><stop offset="1" stop-color="#e6c991" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="lamp-pool">
+        <stop stop-color="#ffedbe" stop-opacity=".4"/><stop offset="1" stop-color="#ffe8b5" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <symbol id="lamp-fixture" viewBox="0 0 108 92">
+      <ellipse cx="56" cy="84" rx="32" ry="7" fill="#0c1830" fill-opacity=".41"/>
+      <path fill="#6c84a2" d="M27 79h21v5H27z"/>
+      <path fill="url(#lamp-metal)" d="M35 80V32c0-12 8-21 21-21h13v5H56c-10 0-16 6-16 16v48z"/>
+      <path fill="url(#lamp-shade)" d="M59 12c5-4 15-5 23-3l9 3c2 1 2 4-1 5H56z"/>
+      <path fill="#263a59" d="M57 17h34l-4 3H59z"/>
+      <path d="M59 19h28" fill="none" stroke="#aec3dd" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="lamp-light-beam" viewBox="0 0 108 92">
+      <path fill="url(#lamp-beam)" d="M62 19h23l18 50H44z"/>
+      <ellipse cx="74" cy="70" rx="31" ry="10" fill="url(#lamp-pool)"/>
+      <path d="M60 19h27" fill="none" stroke="#fff3cf" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+  <a class="skip-link" href="#main">Langsung ke konten</a>
+  <div class="app-shell">
+    <aside class="rail">
+      <a class="logo-mark" href="#overview" aria-label="Streetlamp, ringkasan">
+        <svg class="icon" aria-hidden="true"><use href="#icon-logo"></use></svg>
+      </a>
+      <nav id="navigation" aria-label="Navigasi dashboard" hidden>
+        <a href="#overview" aria-current="location" title="Ringkasan"><svg class="icon" aria-hidden="true"><use href="#icon-grid"></use></svg><span>Ringkasan</span></a>
+        <a href="#sensor-section" title="Sensor"><svg class="icon" aria-hidden="true"><use href="#icon-sensor"></use></svg><span>Sensor</span></a>
+        <a href="#controls" title="Kontrol"><svg class="icon" aria-hidden="true"><use href="#icon-controls"></use></svg><span>Kontrol</span></a>
+        <a href="#history-section" title="Riwayat"><svg class="icon" aria-hidden="true"><use href="#icon-history"></use></svg><span>Riwayat</span></a>
+      </nav>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="brand">
+          <svg class="icon mobile-logo" aria-hidden="true"><use href="#icon-logo"></use></svg>
+          <strong>streetlamp</strong>
+          <span>Ruang kendali</span>
+        </div>
+        <div class="topbar-actions">
+          <span id="connection" class="badge">Belum masuk</span>
+          <button id="logout" class="icon-button" type="button" aria-label="Keluar" title="Keluar" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#icon-exit"></use></svg>
+          </button>
+        </div>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <form id="login" class="login-card" aria-labelledby="login-title">
+          <div class="login-fields">
+            <div class="login-label"><svg class="icon" aria-hidden="true"><use href="#icon-logo"></use></svg> Smart Street Lamp</div>
+            <h1 id="login-title">Masuk ke ruang kendali</h1>
+            <label for="username">Nama pengguna</label>
+            <input id="username" name="username" autocomplete="username" value="admin" required>
+            <label for="password">Kata sandi</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button class="button button-primary" type="submit">Masuk <svg class="icon" aria-hidden="true"><use href="#icon-right"></use></svg></button>
+            <p id="login-error" class="error" role="alert"></p>
+          </div>
+          <div class="login-art" aria-hidden="true">
+            <svg class="login-lamp" viewBox="0 0 108 92" aria-hidden="true" focusable="false">
+              <use href="#lamp-fixture"/>
+              <use class="lamp-emission" href="#lamp-light-beam"/>
+            </svg>
+          </div>
+        </form>
+
+        <div id="dashboard" hidden>
+          <section id="overview" class="hero" aria-labelledby="hero-title" tabindex="-1">
+            <div class="hero-copy">
+              <div class="device-label"><svg class="icon" aria-hidden="true"><use href="#icon-chip"></use></svg><span id="device">streetlamp-01</span></div>
+              <h1 id="hero-title">Smart <br>Street Lamp</h1>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#controls">Atur lampu <svg class="icon" aria-hidden="true"><use href="#icon-down-right"></use></svg></a>
+                <span id="actual-mode" class="mode-label">Menunggu perangkat</span>
+              </div>
+            </div>
+            <div class="lamp-overview" aria-labelledby="lamp-overview-title">
+              <div class="lamp-overview-head">
+                <div>
+                  <h2 id="lamp-overview-title">Status lampu</h2>
+                  <p id="lamp-overview-freshness" hidden>Data terakhir</p>
+                </div>
+                <span id="lamp-summary" class="lamp-summary">Belum ada data</span>
+              </div>
+              <div class="lamp-tiles">
+                <article class="lamp-tile">
+                  <h3>Lampu 1</h3>
+                  <svg class="lamp-visual" viewBox="0 0 108 92" aria-hidden="true" focusable="false">
+                    <use href="#lamp-fixture"/>
+                    <use class="lamp-emission" href="#lamp-light-beam"/>
+                  </svg>
+                  <strong class="lamp-percent">—</strong>
+                  <span class="lamp-state">Menunggu</span>
+                </article>
+                <article class="lamp-tile">
+                  <h3>Lampu 2</h3>
+                  <svg class="lamp-visual" viewBox="0 0 108 92" aria-hidden="true" focusable="false">
+                    <use href="#lamp-fixture"/>
+                    <use class="lamp-emission" href="#lamp-light-beam"/>
+                  </svg>
+                  <strong class="lamp-percent">—</strong>
+                  <span class="lamp-state">Menunggu</span>
+                </article>
+                <article class="lamp-tile">
+                  <h3>Lampu 3</h3>
+                  <svg class="lamp-visual" viewBox="0 0 108 92" aria-hidden="true" focusable="false">
+                    <use href="#lamp-fixture"/>
+                    <use class="lamp-emission" href="#lamp-light-beam"/>
+                  </svg>
+                  <strong class="lamp-percent">—</strong>
+                  <span class="lamp-state">Menunggu</span>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="telemetry" aria-labelledby="telemetry-title">
+            <div class="section-meta">
+              <h2 id="telemetry-title">Telemetri</h2>
+              <p id="updated">Belum ada data</p>
+            </div>
+            <div class="metrics">
+              <article class="metric">
+                <h3><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#icon-sun"></use></svg></span>Cahaya sekitar</h3>
+                <div class="gauge" data-gauge="light">
+                  <div class="gauge-face">
+                    <svg viewBox="0 0 208 106" aria-hidden="true" focusable="false">
+                      <path class="gauge-track" d="M28 94a76 76 0 0 1 152 0"/>
+                      <path class="gauge-value"/>
+                    </svg>
+                    <strong id="light"><span class="gauge-number">—</span><small class="gauge-unit"></small></strong>
+                  </div>
+                  <span class="gauge-scale" aria-hidden="true">0–100%</span>
+                </div>
+                <span id="light-condition">Menunggu sensor</span>
+              </article>
+              <article class="metric">
+                <h3><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#icon-distance"></use></svg></span>Jarak objek</h3>
+                <div class="gauge" data-gauge="entry-distance">
+                  <div class="gauge-face">
+                    <svg viewBox="0 0 208 106" aria-hidden="true" focusable="false">
+                      <path class="gauge-track" d="M28 94a76 76 0 0 1 152 0"/>
+                      <path class="gauge-value"/>
+                    </svg>
+                    <strong id="entry-distance"><span class="gauge-number">—</span><small class="gauge-unit"></small></strong>
+                  </div>
+                  <span class="gauge-scale" aria-hidden="true">0–400 cm</span>
+                </div>
+                <span id="entry-presence">Menunggu sensor</span>
+              </article>
+              <article class="metric">
+                <h3><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#icon-current"></use></svg></span>Arus lampu</h3>
+                <div class="gauge" data-gauge="current">
+                  <div class="gauge-face">
+                    <svg viewBox="0 0 208 106" aria-hidden="true" focusable="false">
+                      <path class="gauge-track" d="M28 94a76 76 0 0 1 152 0"/>
+                      <path class="gauge-value"/>
+                    </svg>
+                    <strong id="current"><span class="gauge-number">—</span><small class="gauge-unit"></small></strong>
+                  </div>
+                  <span class="gauge-scale" aria-hidden="true">0–5 mA</span>
+                </div>
+                <span id="sensor-state">Sensor daya belum siap</span>
+              </article>
+              <article class="metric">
+                <h3><span class="metric-icon"><svg class="icon" aria-hidden="true"><use href="#icon-power"></use></svg></span>Daya lampu</h3>
+                <div class="gauge" data-gauge="power">
+                  <div class="gauge-face">
+                    <svg viewBox="0 0 208 106" aria-hidden="true" focusable="false">
+                      <path class="gauge-track" d="M28 94a76 76 0 0 1 152 0"/>
+                      <path class="gauge-value"/>
+                    </svg>
+                    <strong id="power"><span class="gauge-number">—</span><small class="gauge-unit"></small></strong>
+                  </div>
+                  <span class="gauge-scale" aria-hidden="true">0–20 mW</span>
+                </div>
+                <span class="metric-power-label"><span id="voltage">—</span><span id="power-source">Sensor daya belum siap</span></span>
+              </article>
+            </div>
+          </section>
+
+          <div class="dashboard-panels">
+            <section id="controls" class="panel control-panel" aria-labelledby="control-title" tabindex="-1">
+              <div class="panel-heading">
+                <h2 id="control-title">Kendali lampu</h2>
+                <span id="control-state" class="pill">Menunggu perangkat</span>
+              </div>
+              <div class="control-toolbar">
+                <div class="field">
+                  <label for="mode">Mode</label>
+                  <select id="mode"><option value="auto">Otomatis</option><option value="manual">Manual</option></select>
+                </div>
+                <div class="field">
+                  <label for="auto-profile">Cara kerja</label>
+                  <select id="auto-profile"><option value="adaptive">Hemat saat sepi</option><option value="light_only">Ikuti cahaya</option></select>
+                </div>
+                <button id="apply" class="button button-primary" type="button">Simpan</button>
+              </div>
+              <p id="control-hint" class="muted">Saat gelap, lampu menyala penuh saat kendaraan terdeteksi.</p>
+              <div id="channels" class="channels"></div>
+              <p id="command-message" class="feedback" role="status">Pengaturan berlaku setelah diterima lampu.</p>
+            </section>
+
+            <div class="monitor-panels">
+              <section id="history-section" class="panel chart-panel" aria-labelledby="history-title" tabindex="-1">
+                <div class="panel-heading">
+                  <div><h2 id="history-title">Riwayat cahaya</h2><p class="muted">Pembacaan LDR dan rata-rata kecerahan lampu.</p></div>
+                </div>
+                <div class="chart-legend" aria-hidden="true"><span><i></i>Cahaya</span><span><i class="legend-pwm"></i>Kecerahan</span></div>
+                <canvas id="chart" height="230" role="img" aria-label="Riwayat cahaya dan rata-rata kecerahan lampu dalam persen" aria-describedby="chart-caption"></canvas>
+                <p id="chart-caption" class="muted">Belum ada riwayat.</p>
+              </section>
+
+              <section id="sensor-section" class="panel sensor-panel" aria-labelledby="sensor-title" tabindex="-1">
+                <div class="sensor-heading">
+                  <span class="sensor-icon"><svg class="icon" aria-hidden="true"><use href="#icon-sensor"></use></svg></span>
+                  <div><h2 id="sensor-title">Sensor cahaya</h2><p class="muted">Pembacaan LDR pada ESP32.</p></div>
+                </div>
+                <details class="sensor-details">
+                  <summary>Rincian sensor <svg class="icon" aria-hidden="true"><use href="#icon-chevron"></use></svg></summary>
+                  <div><span id="ldr-detail">ADC —</span><span id="digital-state">DO —</span><span id="firmware-state">Firmware —</span></div>
+                </details>
+              </section>
+
+              <section class="panel activity-panel" aria-labelledby="activity-title">
+                <div class="panel-heading"><h2 id="activity-title">Riwayat perintah</h2></div>
+                <div class="table-wrap" tabindex="0" role="region" aria-labelledby="activity-title">
+                  <table>
+                    <thead><tr><th scope="col">Waktu</th><th scope="col">Pengaturan</th><th scope="col">Status</th></tr></thead>
+                    <tbody id="command-history"><tr><td colspan="3">Belum ada aktivitas.</td></tr></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-
-  <aside class="live-card glass" aria-label="Kondisi perangkat">
-    <div class="live-card-heading"><span><i aria-hidden="true"></i> KONDISI PERANGKAT</span><span id="device-status" class="live-state">Menunggu</span></div>
-    <div class="live-row"><div><span>Cahaya sekitar</span><strong id="hero-light">—</strong></div><span id="hero-condition" class="live-pill">—</span></div>
-    <div class="live-row"><div><span>Jarak objek</span><strong id="hero-distance">—</strong></div><span id="hero-presence" class="live-pill">—</span></div>
-    <div class="live-card-bottom"><span>Tiga lampu</span><strong id="scene-status">Belum ada data</strong></div>
-  </aside>
-
-  <div id="street-scene" class="street-scene">
-    <svg id="road-illustration" viewBox="0 0 1000 360" role="img" aria-labelledby="road-title road-description">
-      <title id="road-title">Perjalanan di bawah tiga lampu jalan</title>
-      <desc id="road-description">Ilustrasi jalan dengan mobil dan tiga lampu.</desc>
-      <defs>
-        <linearGradient id="beam-v4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2ce" stop-opacity=".58"/><stop offset=".7" stop-color="#f4ede0" stop-opacity=".11"/><stop offset="1" stop-color="#f4ede0" stop-opacity="0"/></linearGradient>
-        <linearGradient id="pole-v4" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8795ab"/><stop offset=".45" stop-color="#e4e3dc"/><stop offset="1" stop-color="#97a2b4"/></linearGradient>
-        <linearGradient id="road-v4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9e1ef" stop-opacity=".07"/><stop offset="1" stop-color="#14213d" stop-opacity="0"/></linearGradient>
-        <linearGradient id="car-paint-v4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff9e9"/><stop offset="1" stop-color="#ded6c6"/></linearGradient>
-      </defs>
-      <g class="city-horizon" fill="none" stroke="#cad4e2" stroke-opacity=".12" stroke-width="1"><path d="M18 257h52v-28h34v28h53v-15h66v15h86v-35h24v35h41v-20h60v20h60v-36h40v36h68v-16h43v16h91v-23h50v23h68v-40h28v40h70"/></g>
-      <path d="M20 286H980v65H20Z" fill="url(#road-v4)"/><path d="M20 286H980" fill="none" stroke="#b7c4d9" stroke-opacity=".4" stroke-width="1"/><path d="M20 313H980" fill="none" stroke="#b7c4d9" stroke-opacity=".36" stroke-width="1.5" stroke-dasharray="23 22"/>
-      <g id="scene-lamp0" class="scene-lamp">
-        <g class="lamp-light"><path d="M230 99L137 286H356L260 99Z" fill="url(#beam-v4)"/><ellipse cx="247" cy="287" rx="104" ry="7" fill="#fff2ce" fill-opacity=".08"/></g>
-        <path d="M140 286V115Q140 88 168 88H242" fill="none" stroke="url(#pole-v4)" stroke-width="6" stroke-linecap="round"/><path d="M229 83h31l9 17h-46Z" fill="#9ca9ba"/><path class="lamp-bulb" d="M229 83h31l9 17h-46Z" fill="#fff2ce"/>
-        <text x="140" y="346" fill="#d7dfeb" font-size="12" letter-spacing="2" font-family="Segoe UI,Arial,sans-serif">01</text>
-      </g>
-      <g id="scene-lamp1" class="scene-lamp" transform="translate(285 0)">
-        <g class="lamp-light"><path d="M230 99L137 286H356L260 99Z" fill="url(#beam-v4)"/><ellipse cx="247" cy="287" rx="104" ry="7" fill="#fff2ce" fill-opacity=".08"/></g>
-        <path d="M140 286V115Q140 88 168 88H242" fill="none" stroke="url(#pole-v4)" stroke-width="6" stroke-linecap="round"/><path d="M229 83h31l9 17h-46Z" fill="#9ca9ba"/><path class="lamp-bulb" d="M229 83h31l9 17h-46Z" fill="#fff2ce"/>
-        <text x="140" y="346" fill="#d7dfeb" font-size="12" letter-spacing="2" font-family="Segoe UI,Arial,sans-serif">02</text>
-      </g>
-      <g id="scene-lamp2" class="scene-lamp" transform="translate(570 0)">
-        <g class="lamp-light"><path d="M230 99L137 286H356L260 99Z" fill="url(#beam-v4)"/><ellipse cx="247" cy="287" rx="104" ry="7" fill="#fff2ce" fill-opacity=".08"/></g>
-        <path d="M140 286V115Q140 88 168 88H242" fill="none" stroke="url(#pole-v4)" stroke-width="6" stroke-linecap="round"/><path d="M229 83h31l9 17h-46Z" fill="#9ca9ba"/><path class="lamp-bulb" d="M229 83h31l9 17h-46Z" fill="#fff2ce"/>
-        <text x="140" y="346" fill="#d7dfeb" font-size="12" letter-spacing="2" font-family="Segoe UI,Arial,sans-serif">03</text>
-      </g>
-      <g id="scene-car" class="scene-car">
-        <ellipse cx="66" cy="292" rx="66" ry="5" fill="#09152b" fill-opacity=".4"/>
-        <g class="car-body"><path d="M116 263L178 252V282L116 274Z" fill="#fff2ce" fill-opacity=".07"/><path d="M7 260L28 257L43 239Q46 235 52 235H80Q87 235 91 241L105 258H119Q125 258 125 266V279H3V267Q3 261 7 260Z" fill="url(#car-paint-v4)" stroke="#f4ede0" stroke-width="1"/><path d="M48 241H78Q82 241 85 245L95 258H35Z" fill="#1b2b47"/><path d="M62 241V258M36 263H106" fill="none" stroke="#d5ccbb" stroke-width="1.5"/><rect x="117" y="263" width="7" height="5" rx="1" fill="#fff9dc"/><rect x="4" y="264" width="4" height="5" rx="1" fill="#ab8247"/></g>
-        <g class="car-wheel"><circle cx="27" cy="280" r="11" fill="#0b1930" stroke="#e2d6bd" stroke-width="2"/><path d="M27 274V286M21 280H33" fill="none" stroke="#8995aa" stroke-width="1.2"/><circle cx="27" cy="280" r="2" fill="#c2cbd8"/></g>
-        <g class="car-wheel"><circle cx="101" cy="280" r="11" fill="#0b1930" stroke="#e2d6bd" stroke-width="2"/><path d="M101 274V286M95 280H107" fill="none" stroke="#8995aa" stroke-width="1.2"/><circle cx="101" cy="280" r="2" fill="#c2cbd8"/></g>
-      </g>
-    </svg>
-  </div>
-
-  <div class="hero-features">
-    <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/></svg><p><strong>Ikuti cahaya</strong><span>Terang saat dibutuhkan</span></p></div>
-    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17v-4l3-2 2-5h7l3 5 2 2v4H4Z"/><circle cx="8" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><p><strong>Peka kendaraan</strong><span>Satu sensor, tiga lampu</span></p></div>
-    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v18M12 3v18M18 3v18"/><path d="M3 8h6m0 8h6m0-7h6"/></svg><p><strong>Kendali bebas</strong><span>Atur tiap lampu</span></p></div>
-    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8a14 14 0 0 1 18 0M6 12a9 9 0 0 1 12 0m-9 4a4 4 0 0 1 6 0"/><circle cx="12" cy="20" r="1"/></svg><p><strong>Tetap terpantau</strong><span>Status dalam satu layar</span></p></div>
-  </div>
-</section>
-
-<div class="update-line"><span id="updated">Belum ada data</span><span>Data dari lampu</span></div>
-<section class="metrics" aria-label="Kondisi lampu">
-  <article class="metric"><span class="eyebrow">CAHAYA SEKITAR</span><strong id="light">—</strong><span id="light-condition">Menunggu sensor</span><small>Sensor cahaya</small></article>
-  <article class="metric"><span class="eyebrow">JARAK OBJEK</span><strong id="entry-distance">—</strong><span id="entry-presence">Menunggu sensor</span><small>Satu sensor, tiga lampu</small></article>
-  <article class="metric"><span class="eyebrow">ARUS LAMPU</span><strong id="current">—</strong><span id="sensor-state">Sensor daya belum siap</span><small>Arus pada jalur ukur</small></article>
-  <article class="metric"><span class="eyebrow">DAYA LAMPU</span><strong id="power">—</strong><span id="voltage">—</span><small id="power-source">Sensor daya belum siap</small></article>
-</section>
-<section id="sensor-section" class="panel" aria-labelledby="sensor-title">
-  <h2 id="sensor-title">Sensor cahaya</h2>
-  <p class="intro">Cahaya sekitar dibaca dari sensor LDR pada ESP32.</p>
-  <details class="sensor-details"><summary>Rincian sensor</summary><div><span id="ldr-detail">ADC —</span><span id="digital-state">DO —</span><span id="firmware-state">Firmware —</span></div></details>
-</section>
-<section id="controls" class="panel control-panel" aria-labelledby="control-title"><div class="section-heading"><div><span class="eyebrow">02 / LAMPU</span><h2 id="control-title">Atur sesuka Anda.</h2></div><span id="control-state" class="pill">Menunggu perangkat</span></div><div class="control-toolbar"><div class="field"><label for="mode">Mode</label><select id="mode"><option value="auto">Otomatis</option><option value="manual">Manual</option></select></div><div class="field"><label for="auto-profile">Cara kerja</label><select id="auto-profile"><option value="adaptive">Hemat saat sepi</option><option value="light_only">Ikuti cahaya</option></select></div><button id="apply" class="primary" type="button">Simpan ↗</button></div><p id="control-hint" class="muted">Saat gelap, satu kendaraan membuat ketiga lampu terang bersama.</p><div id="channels" class="channels"></div><div class="control-bottom"><div><button id="start-light-test" class="outline" type="button">Tes cahaya</button><button id="adaptive-control" class="quiet" type="button">Mode hemat ↗</button></div><div class="test-checks"><span id="test-dark">○ Gelap</span><span id="test-bright">○ Terang</span></div></div><p id="light-test-status" class="muted">Pilih Terang atau Gelap untuk mencoba sensor cahaya.</p><p id="command-message" class="feedback" role="status">Pengaturan berlaku setelah diterima lampu.</p></section>
-<section id="history-section" class="history-grid" aria-label="Riwayat"><article class="panel"><span class="eyebrow">03 / RIWAYAT</span><h2>Perjalanan cahaya.</h2><div class="chart-legend"><span><i></i>Cahaya</span><span><i class="legend-pwm"></i>Kecerahan lampu</span></div><canvas id="chart" height="230" role="img" aria-label="Riwayat cahaya dan kecerahan lampu"></canvas><p id="chart-caption" class="muted">Belum ada riwayat</p></article><article class="panel"><span class="eyebrow">AKTIVITAS</span><h2>Pilihan terakhir.</h2><div class="table-wrap"><table><thead><tr><th>Waktu</th><th>Pengaturan</th><th>Status</th></tr></thead><tbody id="command-history"></tbody></table></div></article></section>
-<footer><span>✦ streetlamp</span><p>Penerangan yang mengikuti keadaan.</p></footer>
-</div></main></body></html>
+</body>
+</html>

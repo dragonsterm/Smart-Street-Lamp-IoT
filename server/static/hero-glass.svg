@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="396" viewBox="0 0 1440 396">
+  <defs>
+    <linearGradient id="navy-glass" x1="0" y1="0" x2="1" y2=".44" gradientUnits="objectBoundingBox">
+      <stop stop-color="#111d35"/>
+      <stop offset=".46" stop-color="#1b3151"/>
+      <stop offset=".75" stop-color="#253f63"/>
+      <stop offset="1" stop-color="#14213d"/>
+    </linearGradient>
+    <radialGradient id="reflected-light" cx=".68" cy="0" r=".58">
+      <stop stop-color="#a9c2e2" stop-opacity=".76"/>
+      <stop offset=".34" stop-color="#7da1cf" stop-opacity=".48"/>
+      <stop offset=".77" stop-color="#3f648e" stop-opacity=".11"/>
+      <stop offset="1" stop-color="#243c62" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass-rib">
+      <stop stop-color="#0b1933" stop-opacity=".71"/>
+      <stop offset=".28" stop-color="#1b2c50" stop-opacity=".14"/>
+      <stop offset=".57" stop-color="#527ca8" stop-opacity=".07"/>
+      <stop offset=".84" stop-color="#9ab8dc" stop-opacity=".36"/>
+      <stop offset=".96" stop-color="#b1c8e5" stop-opacity=".58"/>
+      <stop offset="1" stop-color="#1c2945" stop-opacity=".36"/>
+    </linearGradient>
+    <linearGradient id="glass-shade" x1="0" y1="0" x2="1" y2=".36" gradientUnits="objectBoundingBox">
+      <stop stop-color="#12203b" stop-opacity=".76"/>
+      <stop offset=".34" stop-color="#14213d" stop-opacity=".43"/>
+      <stop offset=".66" stop-color="#162542" stop-opacity="0"/>
+      <stop offset="1" stop-color="#101c34" stop-opacity=".28"/>
+    </linearGradient>
+    <linearGradient id="lower-shade" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset=".35" stop-color="#101e38" stop-opacity="0"/>
+      <stop offset="1" stop-color="#101e38" stop-opacity=".49"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#navy-glass)" d="M0 0h1440v396H0z"/>
+  <path fill="url(#reflected-light)" d="M0 0h1440v396H0z"/>
+  <path fill="url(#glass-rib)" opacity="0.27" d="M449 -20h50C501 134 496 290 535 416h-50C449 292 447 134 449 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.38" d="M500 -20h42C544 134 543 290 582 416h-42C504 292 498 134 500 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.3" d="M540 -20h61C603 134 606 290 645 416h-61C548 292 538 134 540 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.52" d="M589 -20h46C637 134 644 290 683 416h-46C601 292 587 134 589 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.43" d="M632 -20h81C715 134 726 290 765 416h-81C648 292 630 134 632 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.64" d="M695 -20h45C742 134 757 290 796 416h-45C715 292 693 134 695 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.68" d="M744 -20h53C799 134 818 290 857 416h-53C768 292 742 134 744 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.62" d="M790 -20h71C863 134 886 290 925 416h-71C818 292 788 134 790 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.58" d="M857 -20h45C904 134 931 290 970 416h-45C889 292 855 134 857 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.5" d="M902 -20h68C972 134 1003 290 1042 416h-68C938 292 900 134 902 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.64" d="M966 -20h53C1021 134 1056 290 1095 416h-53C1006 292 964 134 966 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.54" d="M1017 -20h76C1095 134 1134 290 1173 416h-76C1061 292 1015 134 1017 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.48" d="M1085 -20h62C1149 134 1192 290 1231 416h-62C1133 292 1083 134 1085 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.64" d="M1147 -20h76C1225 134 1272 290 1311 416h-76C1199 292 1145 134 1147 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.41" d="M1212 -20h55C1269 134 1320 290 1359 416h-55C1268 292 1210 134 1212 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.47" d="M1268 -20h71C1341 134 1396 290 1435 416h-71C1328 292 1266 134 1268 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.39" d="M1343 -20h64C1409 134 1468 290 1507 416h-64C1407 292 1341 134 1343 -20Z"/>
+  <path fill="url(#glass-rib)" opacity="0.35" d="M1403 -20h79C1484 134 1547 290 1586 416h-79C1471 292 1401 134 1403 -20Z"/>
+  <path fill="url(#lower-shade)" d="M0 0h1440v396H0z"/>
+  <path fill="url(#glass-shade)" d="M0 0h1440v396H0z"/>
+</svg>

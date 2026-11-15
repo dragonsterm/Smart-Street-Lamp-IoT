@@ -3,7 +3,6 @@ const $=id=>document.getElementById(id);
 const envLabels={sensor:"Sensor",morning:"Pagi",evening:"Sore",night:"Malam",storm:"Badai",bright:"Terang",dark:"Gelap"};
 const statusLabels={queued:"Menunggu",delivered:"Dikirim",applied:"Berhasil",expired:"Terlambat",failed:"Belum berhasil",superseded:"Diganti"};
 let signedIn=false,draft=[0,0,0],initialized=false,latestState=null,history=[],polling=false;
-let lightTest=false,testDark=false,testBright=false;
 let liveSocket=null,liveReady=false,commandUpdateTime=0;
 let draftVersion=0,savedDraftVersion=0;
 const pendingCommand = command => command.status === "queued" || command.status === "delivered";
@@ -36,22 +35,67 @@ function showLogin(){
   $("connection").className = "badge";
 }
 function showDashboard(){const entering=!signedIn;document.body.classList.remove("signed-out");signedIn=true;$("login").hidden=true;$("dashboard").hidden=false;$("logout").hidden=false;$("navigation").hidden=false;if(entering)window.scrollTo({top:0,left:0,behavior:"instant"});}
-for(let i=0;i<3;i++){
-  const card=document.createElement("article");card.className="channel";
-  card.innerHTML=`<div class="channel-top"><strong><span id="bulb${i}" class="bulb"></span>Lampu ${i+1}</strong><span class="channel-number">0${i+1}</span></div><p id="confirmed${i}" class="confirmed">—</p><p id="reason${i}" class="reason">Menunggu lampu</p><meter id="level${i}" class="lamp-level" min="0" max="100" value="0" aria-hidden="true"></meter><div id="manual${i}" class="manual-controls" hidden><label for="pwm${i}" class="slider-label">Kecerahan <output id="draft${i}" for="pwm${i}">0%</output></label><input id="pwm${i}" type="range" min="0" max="100" value="0" step="1"><div class="channel-actions"><button id="toggle${i}" class="quiet" type="button">Nyalakan</button><span id="pwm-state${i}" class="pwm-state">Lalu tekan Simpan</span></div></div>`;
+for (let i = 0; i < 3; i++) {
+  const card = document.createElement("article");
+  card.className = "channel";
+  card.innerHTML = `<div class="channel-top">
+    <span id="bulb${i}" class="bulb"><svg class="icon" aria-hidden="true"><use href="#icon-logo"></use></svg></span>
+    <div><strong class="channel-name">Lampu ${i + 1}</strong><p id="reason${i}" class="reason">Menunggu lampu</p></div>
+    <p id="confirmed${i}" class="confirmed">—</p>
+  </div>
+  <meter id="level${i}" class="lamp-level" min="0" max="100" value="0" aria-hidden="true"></meter>
+  <div id="manual${i}" class="manual-controls" hidden>
+    <label for="pwm${i}" class="slider-label">Kecerahan <output id="draft${i}" for="pwm${i}" aria-hidden="true">0%</output></label>
+    <div id="track${i}" class="slider">
+      <div class="slider-track" aria-hidden="true"><span class="slider-fill"></span></div>
+      <input id="pwm${i}" type="range" min="0" max="100" value="0" step="1" aria-label="Kecerahan lampu ${i + 1}">
+    </div>
+    <div class="channel-actions">
+      <button id="toggle${i}" class="text-button" type="button">Nyalakan</button>
+    </div>
+  </div>`;
   $("channels").appendChild(card);
-  $(`pwm${i}`).addEventListener("input",event=>{
+  $(`pwm${i}`).addEventListener("input", event => {
     draftVersion++;
-    draft[i]=Number(event.target.value);
-    $(`draft${i}`).textContent=`${draft[i]}%`;
-    $(`toggle${i}`).textContent=draft[i]?"Matikan":"Nyalakan";
+    draft[i] = Number(event.target.value);
+    renderSlider(i);
   });
-  $(`toggle${i}`).addEventListener("click",()=>{draft[i]=draft[i]?0:100;editDraft();});
+  $(`toggle${i}`).addEventListener("click", () => {
+    draft[i] = draft[i] ? 0 : 100;
+    editDraft();
+  });
 }
-function renderDraft(){
-  const manual=$("mode").value==="manual";$("auto-profile").disabled=manual;
-  $("control-hint").textContent=manual?"Geser kecerahan tiap lampu, lalu tekan Simpan.":$("auto-profile").value==="light_only"?"Lampu menyala saat gelap dan mati saat terang.":"Saat gelap, kendaraan membuat ketiga lampu terang. Setelah jalan kosong 10 detik, lampu meredup ke 50% dalam 10 detik.";
-  for(let i=0;i<3;i++){$(`manual${i}`).hidden=!manual;$(`pwm${i}`).value=draft[i];$(`draft${i}`).textContent=`${draft[i]}%`;$(`pwm${i}`).disabled=!manual;$(`toggle${i}`).disabled=!manual;$(`toggle${i}`).textContent=draft[i]?"Matikan":"Nyalakan";$(`pwm-state${i}`).textContent="Lalu tekan Simpan";}
+
+function renderSlider(index) {
+  const percent = draft[index];
+  $(`draft${index}`).textContent = `${percent}%`;
+  $(`track${index}`).style.setProperty("--progress", percent / 100);
+  $(`track${index}`).style.setProperty("--fill-opacity", percent ? 1 : 0);
+  $(`pwm${index}`).setAttribute("aria-valuetext", `${percent}%`);
+  const action = percent ? "Matikan" : "Nyalakan";
+  const toggle = $(`toggle${index}`);
+  toggle.textContent = action;
+  toggle.setAttribute("aria-label", `${action} lampu ${index + 1}`);
+}
+
+function renderDraft() {
+  const manual = $("mode").value === "manual";
+  $("auto-profile").disabled = manual;
+  const hint = $("control-hint");
+  hint.hidden = manual;
+  if (!manual) {
+    hint.textContent = $("auto-profile").value === "light_only"
+      ? "Lampu menyala saat gelap dan mati saat terang."
+      : "Saat gelap, lampu menyala penuh saat kendaraan terdeteksi. Setelah 10 detik jalan sepi, lampu meredup ke 50% dalam 10 detik.";
+  }
+  for (let i = 0; i < 3; i++) {
+    $(`manual${i}`).hidden = !manual;
+    const input = $(`pwm${i}`);
+    input.value = draft[i];
+    input.disabled = !manual;
+    $(`toggle${i}`).disabled = !manual;
+    renderSlider(i);
+  }
 }
 function editDraft() {
   draftVersion++;
@@ -73,52 +117,130 @@ async function sendCommand(body){
 }
 $("apply").addEventListener("click",async()=>{
   $("apply").disabled=true;
-  try{const profile=$("auto-profile").value;await sendCommand({mode:$("mode").value,pwm:[...draft],auto_profile:profile});lightTest=$("mode").value==="auto"&&profile==="light_only";await refresh();}
+  try{const profile=$("auto-profile").value;await sendCommand({mode:$("mode").value,pwm:[...draft],auto_profile:profile});await refresh();}
   catch(error){$("command-message").textContent=error.message;}finally{$("apply").disabled=false;}
 });
-async function chooseProfile(profile){
-  try{await sendCommand({mode:"auto",pwm:[0,0,0],auto_profile:profile});$("mode").value="auto";$("auto-profile").value=profile;renderDraft();lightTest=profile==="light_only";testDark=false;testBright=false;await refresh();}
-  catch(error){$("light-test-status").textContent=error.message;}
+const gaugeSettings = {
+  light: {ceiling: 100, unit: "%", digits: 1},
+  "entry-distance": {ceiling: 400, unit: "cm", digits: 1},
+  current: {ceiling: 5, unit: "mA", digits: 2, autoScale: true},
+  power: {ceiling: 20, unit: "mW", digits: 2, autoScale: true}
+};
+const gauges = Object.fromEntries(Object.entries(gaugeSettings).map(([id, settings]) => {
+  const element = $(id).closest(".gauge");
+  return [id, {
+    ...settings,
+    floor: 0,
+    element,
+    number: element.querySelector(".gauge-number"),
+    unitLabel: element.querySelector(".gauge-unit"),
+    scale: element.querySelector(".gauge-scale"),
+    track: element.querySelector(".gauge-track"),
+    arc: element.querySelector(".gauge-value")
+  }];
+}));
+const scaleLabel = new Intl.NumberFormat("id-ID", {maximumFractionDigits: 1});
+
+function gaugeArc(start, end) {
+  if (start >= end) return "";
+  const point = fraction => {
+    const angle = Math.PI * (1 - fraction);
+    const x = 104 + 76 * Math.cos(angle), y = 94 - 76 * Math.sin(angle);
+    return `${x.toFixed(2)} ${y.toFixed(2)}`;
+  };
+  return `M ${point(start)} A 76 76 0 0 1 ${point(end)}`;
 }
-$("start-light-test").addEventListener("click",()=>chooseProfile("light_only"));
-$("adaptive-control").addEventListener("click",()=>chooseProfile("adaptive"));
+
+function renderGauge(id, value) {
+  const gauge = gauges[id];
+  const reading = Number.isFinite(value) ? value : null;
+  if (gauge.reading === reading) return;
+  gauge.reading = reading;
+  const text = reading === null ? "—" : reading.toFixed(gauge.digits);
+  gauge.number.textContent = text;
+  gauge.unitLabel.textContent = reading === null ? "" : ` ${gauge.unit}`;
+  gauge.element.classList.toggle("has-reading", reading !== null);
+  gauge.element.classList.toggle("long-reading", text.length > 7);
+  if (reading === null) {
+    gauge.arc.setAttribute("d", "");
+    gauge.track.setAttribute("d", gaugeArc(0, 1));
+    return;
+  }
+
+  // Keep the scale stable during a session and expand only when the reading exceeds it.
+  if (gauge.autoScale && Math.abs(reading) > gauge.ceiling) {
+    const magnitude = Math.abs(reading);
+    const order = 10 ** Math.floor(Math.log10(magnitude));
+    gauge.ceiling = order * [1, 2, 5, 10].find(step => step * order >= magnitude);
+  }
+  if (reading < 0 || gauge.floor < 0) gauge.floor = -gauge.ceiling;
+
+  const fraction = (reading - gauge.floor) / (gauge.ceiling - gauge.floor);
+  const progress = Math.max(0, Math.min(1, fraction));
+  const remainingStart = progress === 0 ? 0 : Math.min(1, progress + .08);
+  gauge.arc.setAttribute("d", gaugeArc(0, progress));
+  gauge.track.setAttribute("d", gaugeArc(remainingStart, 1));
+  const unit = gauge.unit === "%" ? "%" : ` ${gauge.unit}`;
+  gauge.scale.textContent = `${scaleLabel.format(gauge.floor)}–${scaleLabel.format(gauge.ceiling)}${unit}`;
+}
+
+const lampTiles = [...document.querySelectorAll(".lamp-tile")].map(tile => ({
+  tile,
+  percent: tile.querySelector(".lamp-percent"),
+  state: tile.querySelector(".lamp-state"),
+  beam: tile.querySelector(".lamp-emission")
+}));
+
+function renderLampOverview(levels, online) {
+  const active = levels?.filter(level => level > 0).length;
+  $("lamp-summary").textContent = active == null ? "Belum ada data"
+    : active === 0 ? "Semua mati" : `${active}/${lampTiles.length} menyala`;
+  $("lamp-overview-freshness").hidden = !levels || online;
+  for (const [index, lamp] of lampTiles.entries()) {
+    const level = levels?.[index] ?? null;
+    if (lamp.level === level) continue;
+    lamp.level = level;
+    lamp.percent.textContent = level === null ? "—" : `${level}%`;
+    lamp.state.textContent = level === null ? "Menunggu" : level > 0 ? "Menyala" : "Mati";
+    lamp.beam.style.opacity = (level ?? 0) / 100;
+    lamp.tile.classList.toggle("is-lit", level > 0);
+  }
+}
+
 function renderState(state){
   const commandsChanged = latestState?.commands !== state.commands;
   latestState=state;
   const t = state.telemetry;
+  renderLampOverview(t?.pwm, state.online);
   const physicalDevice = t?.measurement_kind === "ina219_measured";
   const powerAvailable = t?.ina_valid === true;
+  const distance = t?.distance_cm?.[0];
+  const current = powerAvailable ? t.current_ma : null;
+  const power = powerAvailable ? t.power_mw : null;
+  renderGauge("light", t?.light_percent);
+  renderGauge("entry-distance", distance);
+  renderGauge("current", current);
+  renderGauge("power", power);
   const powerSource = powerAvailable
     ? (physicalDevice ? "Hasil ukur INA219" : "Estimasi dari PWM")
     : "Sensor daya belum siap";
-  $("current").textContent = fmt(powerAvailable ? t.current_ma : null, "mA", 2);
-  $("power").textContent = fmt(powerAvailable ? t.power_mw : null, "mW", 2);
   $("voltage").textContent = fmt(powerAvailable ? t.voltage_v : null, "V", 3);
   $("sensor-state").textContent = powerSource;
   $("power-source").textContent = powerSource;
-  const presetFirmware = ["2.2.0","2.3.0"].includes(t?.firmware_version);
   const pending = state.commands.some(pendingCommand);
   $("device").textContent=state.device_id;$("connection").textContent=state.online?"Terhubung":"Terputus";$("connection").className=`badge ${state.online?"online":"offline"}`;
   $("updated").textContent=`Pembaruan: ${localTime(state.last_seen_ms)}${!state.online&&t?" · data terakhir":""}`;
   $("firmware-state").textContent=t?`Firmware ${t.firmware_version}`:"Belum ada perangkat";
   if(t){
     const dark=t.light_condition==="dark",band=t.light_percent>30&&t.light_percent<45;
-    const distance=t.distance_cm?.[0],present=t.vehicle_present?.[0],hold=t.vehicle_hold_ms?.[0]||0;
-    $("light").textContent=fmt(t.light_percent,"%");$("ldr-detail").textContent=`ADC ${t.ldr_raw} / 4095 · GPIO34`;
+    const present=t.vehicle_present?.[0],hold=t.vehicle_hold_ms?.[0]||0;
+    $("ldr-detail").textContent=`ADC ${t.ldr_raw} / 4095 · GPIO34`;
     $("light-condition").textContent=t.light_condition==="unknown"?"Menunggu sensor":`${dark?"Gelap":"Terang"}${band?" · tetap stabil":""}`;
     $("digital-state").textContent=`DO ${t.ldr_digital_dark?"HIGH / gelap":"LOW / terang"}`;
-    $("entry-distance").textContent=fmt(distance,"cm");$("entry-presence").textContent=distance==null?"Sensor belum tersedia":present?"Ada kendaraan":hold>0?`Terang ${Math.ceil(hold/1000)} detik lagi`:"Jalan sepi";
+    $("entry-presence").textContent=distance==null?"Sensor belum tersedia":present?"Ada kendaraan":hold>0?`Terang ${Math.ceil(hold/1000)} detik lagi`:"Jalan sepi";
     const mode=t.mode==="manual"?"Manual":t.auto_profile==="light_only"?"Otomatis · Ikuti cahaya":"Otomatis · Hemat";
     $("actual-mode").textContent=mode;$("control-state").textContent=t.mode==="manual"?"Manual":"Otomatis";
-    $("hero-light").textContent=fmt(t.light_percent,"%");
-    $("hero-condition").textContent=t.light_condition==="unknown"?"Menunggu":dark?"Gelap":"Terang";
-    $("hero-distance").textContent=fmt(distance,"cm");
-    $("hero-presence").textContent=distance==null?"Sensor belum siap":present?"Ada kendaraan":hold>0?"Tetap siaga":"Jalan sepi";
-    $("device-status").textContent=state.online?"Terhubung":"Data terakhir";
 
-    $("scene-status").textContent = t.pwm.every(p=>p===0) ? "Semua mati"
-      : t.pwm.every(p=>p===100) ? "Semua terang"
-      : t.pwm.every(p=>p===50) ? "Redup 50%" : t.pwm.join(" / ")+"%";
     let reason = "Jalan sepi";
     if (t.mode === "manual") reason = "Pilihan manual";
     else if (!dark) reason = "Cahaya sudah cukup";
@@ -142,31 +264,86 @@ function renderState(state){
         renderDraft();
       }
     }
-    const ack=state.commands.find(c=>c.id===t.ack_id);
-    if(lightTest&&state.online&&presetFirmware&&ack?.status==="applied"&&t.mode==="auto"&&t.auto_profile==="light_only"){
-      const matches=t.light_condition!=="unknown"&&t.pwm.every(v=>v===(dark?100:0));
-      if(matches){if(dark)testDark=true;else testBright=true;}
-      $("light-test-status").textContent=matches?testDark&&testBright?"Tes selesai. Sensor cahaya bekerja.":"Sudah sesuai. Coba kondisi lainnya.":"Lampu belum sesuai. Periksa pembacaan sensor.";
-    }else if(lightTest)$("light-test-status").textContent="Menunggu hasil dari lampu.";
   }
-  $("test-dark").textContent=`${testDark?"✓":"○"} Gelap`;$("test-bright").textContent=`${testBright?"✓":"○"} Terang`;
   if (!commandsChanged) return;
   const rows=$("command-history");rows.replaceChildren();
-  for(const c of state.commands){const tr=document.createElement("tr"),time=document.createElement("td"),setting=document.createElement("td"),status=document.createElement("td"),pill=document.createElement("span");time.textContent=shortTime(c.issued_at_ms);setting.textContent=`${c.environment?envLabels[c.environment]+" · ":""}${c.mode==="manual"?"Manual "+c.pwm.join("/")+"%":c.auto_profile==="light_only"?"Tes cahaya":"Hemat"}`;setting.title=c.id;pill.className=`status-pill ${c.status}`;pill.textContent=statusLabels[c.status]||c.status;status.appendChild(pill);tr.append(time,setting,status);rows.appendChild(tr);}
+  for(const c of state.commands){const tr=document.createElement("tr"),time=document.createElement("td"),setting=document.createElement("td"),status=document.createElement("td"),pill=document.createElement("span");time.textContent=shortTime(c.issued_at_ms);setting.textContent=`${c.environment?envLabels[c.environment]+" · ":""}${c.mode==="manual"?"Manual "+c.pwm.join("/")+"%":c.auto_profile==="light_only"?"Ikuti cahaya":"Hemat"}`;setting.title=c.id;pill.className=`status-pill ${c.status}`;pill.textContent=statusLabels[c.status]||c.status;status.appendChild(pill);tr.append(time,setting,status);rows.appendChild(tr);}
   if(!state.commands.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=3;td.textContent="Belum ada aktivitas.";tr.appendChild(td);rows.appendChild(tr);}
   if(state.commands.length){const c=state.commands[0];$("command-message").textContent=c.status==="applied"?"Pengaturan sudah diterapkan.":c.status==="queued"||c.status==="delivered"?"Menunggu lampu menerima pengaturan.":c.status==="failed"?"Belum berhasil. Coba simpan lagi.":c.status==="expired"?"Lampu terlambat merespons. Coba lagi.":"Pengaturan diganti.";}
 }
-function drawChart(){
-  const canvas=$("chart"),ctx=canvas.getContext("2d"),ratio=window.devicePixelRatio||1,width=canvas.clientWidth,height=230;if(!width)return;
-  canvas.width=width*ratio;canvas.height=height*ratio;ctx.scale(ratio,ratio);ctx.clearRect(0,0,width,height);
-  const left=30,right=10,top=12,bottom=26,w=width-left-right,h=height-top-bottom;ctx.font="10px Segoe UI";ctx.fillStyle="#5d6879";ctx.strokeStyle="#dedad0";
-  // The shaded band corresponds to the firmware's 30..45% hysteresis interval.
-  ctx.fillStyle="#eee8db";ctx.fillRect(left,top+(1-.45)*h,w,.15*h);ctx.fillStyle="#5d6879";
-  for(const value of [0,25,50,75,100]){const y=top+(1-value/100)*h;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(width-right,y);ctx.stroke();ctx.fillText(String(value),1,y+4);}
-  if(!history.length){$("chart-caption").textContent="Belum ada riwayat.";return;}
-  const first=history[0].received_at_ms,last=history.at(-1).received_at_ms,span=Math.max(2000,last-first);
-  for(const line of [{color:"#14213d",value:p=>p.light_percent},{color:"#ab8247",value:p=>p.pwm.reduce((a,b)=>a+b,0)/3}]){ctx.strokeStyle=line.color;ctx.lineWidth=2;ctx.beginPath();let previous=null;for(const p of history){const x=left+(p.received_at_ms-first)/span*w,y=top+(1-line.value(p)/100)*h;if(!previous||p.received_at_ms-previous.received_at_ms>6000)ctx.moveTo(x,y);else ctx.lineTo(x,y);previous=p;}ctx.stroke();}
-  ctx.fillStyle="#5d6879";ctx.fillText(shortTime(first),left,height-4);const end=shortTime(last);ctx.fillText(end,Math.max(left,width-ctx.measureText(end).width-right),height-4);$("chart-caption").textContent=`${history.length} pembaruan · ${localTime(first)} — ${shortTime(last)}`;
+function drawChart() {
+  const canvas = $("chart");
+  const width = canvas.clientWidth;
+  if (!width) return;
+
+  const ctx = canvas.getContext("2d");
+  const ratio = window.devicePixelRatio || 1;
+  const height = canvas.clientHeight;
+  const theme = getComputedStyle(canvas);
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
+  ctx.scale(ratio, ratio);
+  const left = 35, right = 9, top = 10, bottom = 24;
+  const plotWidth = width - left - right;
+  const plotHeight = height - top - bottom;
+  const y = value => top + (1 - value / 100) * plotHeight;
+
+  // The shaded band corresponds to the firmware's 30–45% hysteresis interval.
+  ctx.fillStyle = theme.getPropertyValue("--chart-band");
+  ctx.fillRect(left, y(45), plotWidth, y(30) - y(45));
+  ctx.font = '11px Geist, "Segoe UI", sans-serif';
+  ctx.fillStyle = theme.getPropertyValue("--ink-muted");
+  ctx.strokeStyle = theme.getPropertyValue("--chart-grid");
+  ctx.setLineDash([3, 4]);
+  for (const value of [0, 25, 50, 75, 100]) {
+    ctx.beginPath();
+    ctx.moveTo(left, y(value));
+    ctx.lineTo(width - right, y(value));
+    ctx.stroke();
+    ctx.fillText(`${value}%`, 0, y(value) + 4);
+  }
+  ctx.setLineDash([]);
+  if (!history.length) {
+    $("chart-caption").textContent = "Belum ada riwayat.";
+    return;
+  }
+
+  const first = history[0].received_at_ms;
+  const last = history.at(-1).received_at_ms;
+  const span = Math.max(2000, last - first);
+  const x = point => left + (point.received_at_ms - first) / span * plotWidth;
+  const series = [
+    {color: theme.getPropertyValue("--chart-light"), value: point => point.light_percent},
+    {color: theme.getPropertyValue("--amber"), value: point => point.pwm.reduce((sum, value) => sum + value, 0) / 3}
+  ];
+  ctx.lineWidth = 2.2;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  for (const line of series) {
+    ctx.strokeStyle = line.color;
+    ctx.beginPath();
+    let previous = null;
+    for (const point of history) {
+      const px = x(point), py = y(line.value(point));
+      if (!previous || point.received_at_ms - previous.received_at_ms > 6000) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+      previous = point;
+    }
+    ctx.stroke();
+    const latest = history.at(-1);
+    ctx.fillStyle = line.color;
+    ctx.beginPath();
+    ctx.arc(x(latest), y(line.value(latest)), 2.8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = theme.getPropertyValue("--ink-muted");
+  ctx.fillText(shortTime(first), left, height - 4);
+  if (last !== first) {
+    const end = shortTime(last);
+    ctx.fillText(end, width - ctx.measureText(end).width - right, height - 4);
+  }
+  $("chart-caption").textContent = `${history.length} pembaruan · ${localTime(first)} — ${shortTime(last)}`;
 }
 function appendHistory(telemetry, receivedAt) {
   if (!telemetry) return;
@@ -269,6 +446,17 @@ async function refresh(force = false) {
   }
 }
 
+function highlightSection() {
+  const links = [...$("navigation").querySelectorAll("a")];
+  const active = links.find(link => link.hash === window.location.hash) ?? links[0];
+  for (const link of links) {
+    if (link === active) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  }
+}
+
+window.addEventListener("hashchange", highlightSection);
+highlightSection();
 window.addEventListener("resize", drawChart);
 setInterval(() => { if (signedIn && !liveReady) refresh(); }, 2000);
 refresh();

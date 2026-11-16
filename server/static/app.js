@@ -133,6 +133,9 @@ const gauges = Object.fromEntries(Object.entries(gaugeSettings).map(([id, settin
   return [id, {
     ...settings,
     floor: 0,
+    reading: null,
+    displayedReading: null,
+    displayedProgress: 0,
     element,
     number: element.querySelector(".gauge-number"),
     unitLabel: element.querySelector(".gauge-unit"),
@@ -142,15 +145,47 @@ const gauges = Object.fromEntries(Object.entries(gaugeSettings).map(([id, settin
   }];
 }));
 const scaleLabel = new Intl.NumberFormat("id-ID", {maximumFractionDigits: 1});
+const reduceGaugeMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const gaugeTransitionMs = 420;
+const movingGauges = new Set();
+let gaugeFrame = null;
 
-function gaugeArc(start, end) {
-  if (start >= end) return "";
-  const point = fraction => {
-    const angle = Math.PI * (1 - fraction);
-    const x = 104 + 76 * Math.cos(angle), y = 94 - 76 * Math.sin(angle);
-    return `${x.toFixed(2)} ${y.toFixed(2)}`;
-  };
-  return `M ${point(start)} A 76 76 0 0 1 ${point(end)}`;
+function paintGauge(gauge, reading, progress) {
+  if (gauge.displayedReading !== reading) {
+    gauge.displayedReading = reading;
+    const text = reading === null ? "—" : reading.toFixed(gauge.digits);
+    if (gauge.number.textContent !== text) {
+      gauge.number.textContent = text;
+      gauge.element.classList.toggle("long-reading", text.length > 7);
+    }
+  }
+
+  if (gauge.displayedProgress === progress) return;
+  gauge.displayedProgress = progress;
+  const fill = progress * 100;
+  const trackStart = Math.min(100, fill + Math.min(8, fill * 2));
+  gauge.arc.setAttribute("stroke-dasharray", `${fill} 100`);
+  gauge.arc.setAttribute("opacity", Math.min(1, fill / 3));
+  gauge.track.setAttribute("stroke-dashoffset", -trackStart);
+  gauge.track.setAttribute("opacity", Math.min(1, (100 - trackStart) / 3));
+}
+
+function animateGauges(now) {
+  for (const gauge of movingGauges) {
+    const {startedAt, fromReading, fromProgress, targetProgress} = gauge.animation;
+    const elapsed = Math.max(0, now - startedAt);
+    if (elapsed >= gaugeTransitionMs || reduceGaugeMotion.matches) {
+      paintGauge(gauge, gauge.reading, targetProgress);
+      movingGauges.delete(gauge);
+      continue;
+    }
+    const t = elapsed / gaugeTransitionMs;
+    const eased = t * t * (3 - 2 * t);
+    const reading = gauge.reading === null ? null : fromReading + (gauge.reading - fromReading) * eased;
+    const progress = fromProgress + (targetProgress - fromProgress) * eased;
+    paintGauge(gauge, reading, progress);
+  }
+  gaugeFrame = movingGauges.size ? requestAnimationFrame(animateGauges) : null;
 }
 
 function renderGauge(id, value) {
@@ -158,32 +193,47 @@ function renderGauge(id, value) {
   const reading = Number.isFinite(value) ? value : null;
   if (gauge.reading === reading) return;
   gauge.reading = reading;
-  const text = reading === null ? "—" : reading.toFixed(gauge.digits);
-  gauge.number.textContent = text;
   gauge.unitLabel.textContent = reading === null ? "" : ` ${gauge.unit}`;
-  gauge.element.classList.toggle("has-reading", reading !== null);
-  gauge.element.classList.toggle("long-reading", text.length > 7);
-  if (reading === null) {
-    gauge.arc.setAttribute("d", "");
-    gauge.track.setAttribute("d", gaugeArc(0, 1));
+
+  // Keep the scale stable during a session and expand only when the reading exceeds it.
+  let progress = 0;
+  if (reading !== null) {
+    if (gauge.autoScale && Math.abs(reading) > gauge.ceiling) {
+      const magnitude = Math.abs(reading);
+      const order = 10 ** Math.floor(Math.log10(magnitude));
+      gauge.ceiling = order * [1, 2, 5, 10].find(step => step * order >= magnitude);
+    }
+    if (reading < 0 || gauge.floor < 0) gauge.floor = -gauge.ceiling;
+    const fraction = (reading - gauge.floor) / (gauge.ceiling - gauge.floor);
+    progress = Math.max(0, Math.min(1, fraction));
+    const unit = gauge.unit === "%" ? "%" : ` ${gauge.unit}`;
+    const scale = `${scaleLabel.format(gauge.floor)}–${scaleLabel.format(gauge.ceiling)}${unit}`;
+    if (gauge.scale.textContent !== scale) gauge.scale.textContent = scale;
+  }
+
+  if (reduceGaugeMotion.matches || document.hidden) {
+    movingGauges.delete(gauge);
+    paintGauge(gauge, reading, progress);
     return;
   }
 
-  // Keep the scale stable during a session and expand only when the reading exceeds it.
-  if (gauge.autoScale && Math.abs(reading) > gauge.ceiling) {
-    const magnitude = Math.abs(reading);
-    const order = 10 ** Math.floor(Math.log10(magnitude));
-    gauge.ceiling = order * [1, 2, 5, 10].find(step => step * order >= magnitude);
+  // Animate only the arc when there is no previous or new numeric reading.
+  if (reading === null || gauge.displayedReading === null) {
+    paintGauge(gauge, reading, gauge.displayedProgress);
   }
-  if (reading < 0 || gauge.floor < 0) gauge.floor = -gauge.ceiling;
+  if (gauge.displayedReading === reading && gauge.displayedProgress === progress) {
+    movingGauges.delete(gauge);
+    return;
+  }
 
-  const fraction = (reading - gauge.floor) / (gauge.ceiling - gauge.floor);
-  const progress = Math.max(0, Math.min(1, fraction));
-  const remainingStart = progress === 0 ? 0 : Math.min(1, progress + .08);
-  gauge.arc.setAttribute("d", gaugeArc(0, progress));
-  gauge.track.setAttribute("d", gaugeArc(remainingStart, 1));
-  const unit = gauge.unit === "%" ? "%" : ` ${gauge.unit}`;
-  gauge.scale.textContent = `${scaleLabel.format(gauge.floor)}–${scaleLabel.format(gauge.ceiling)}${unit}`;
+  gauge.animation = {
+    startedAt: performance.now(),
+    fromReading: gauge.displayedReading,
+    fromProgress: gauge.displayedProgress,
+    targetProgress: progress
+  };
+  movingGauges.add(gauge);
+  gaugeFrame ??= requestAnimationFrame(animateGauges);
 }
 
 const lampTiles = [...document.querySelectorAll(".lamp-tile")].map(tile => ({
@@ -241,7 +291,7 @@ function renderState(state){
     $("ldr-detail").textContent=`ADC ${t.ldr_raw} / 4095 · GPIO34`;
     $("light-condition").textContent=t.light_condition==="unknown"?"Menunggu sensor":`${dark?"Gelap":"Terang"}${band?" · tetap stabil":""}`;
     if (!physicalDevice) digitalState.textContent=`DO ${t.ldr_digital_dark?"HIGH / gelap":"LOW / terang"}`;
-    $("entry-presence").textContent=distance==null?"Sensor belum tersedia":present?"Ada kendaraan":hold>0?`Terang ${Math.ceil(hold/1000)} detik lagi`:"Jalan sepi";
+    $("entry-presence").textContent=distance==null?"Sensor belum tersedia":present?"Ada kendaraan":hold>0?`Terang akan mati dalam ${Math.ceil(hold/1000)} detik`:"Jalan sepi";
     const mode=t.mode==="manual"?"Manual":t.auto_profile==="light_only"?"Otomatis · Ikuti cahaya":"Otomatis · Hemat";
     $("actual-mode").textContent=mode;$("control-state").textContent=t.mode==="manual"?"Manual":"Otomatis";
 
